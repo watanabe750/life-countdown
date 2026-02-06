@@ -10,14 +10,14 @@ describe('App', () => {
   it('should show setup message when no settings', () => {
     render(<App />);
 
-    expect(screen.getByText('まず設定してください')).toBeInTheDocument();
-    expect(screen.getByText('設定を開く')).toBeInTheDocument();
+    expect(screen.getByText('ようこそ')).toBeInTheDocument();
+    expect(screen.getByText('設定を開始する →')).toBeInTheDocument();
   });
 
   it('should have settings button in header', () => {
     render(<App />);
 
-    const settingsButtons = screen.getAllByRole('button', { name: '設定' });
+    const settingsButtons = screen.getAllByRole('button', { name: /設定/ });
     expect(settingsButtons.length).toBeGreaterThan(0);
   });
 
@@ -31,7 +31,7 @@ describe('App', () => {
     render(<App />);
 
     expect(
-      screen.getByText('データは端末内（localStorage）に保存され、外部送信しません')
+      screen.getByText('データはローカルに保存され、外部送信されません')
     ).toBeInTheDocument();
   });
 
@@ -47,7 +47,7 @@ describe('App', () => {
 
     render(<App />);
 
-    expect(screen.getByText('残り時間')).toBeInTheDocument();
+    expect(screen.getByText('Remaining Time')).toBeInTheDocument();
     expect(screen.getByText(/目標日:/)).toBeInTheDocument();
   });
 });
