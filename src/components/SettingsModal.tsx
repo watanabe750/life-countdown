@@ -53,43 +53,70 @@ function InputStep({
 
       {/* 生年月日 */}
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-3">生年月日</label>
-        <div className="flex items-center gap-3">
-          <div className="flex-1">
-            <input
-              type="text"
-              inputMode="numeric"
-              placeholder="年"
-              value={year}
-              onChange={(e) => onChangeYear(e.target.value)}
-              maxLength={4}
-              className="w-full px-3 py-3 bg-white/60 backdrop-blur-sm border-2 border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-purple-400 focus:bg-white/80 outline-none text-gray-800 text-center text-lg font-semibold transition-all duration-200 hover:border-purple-300 hover:shadow-md shadow-sm"
-            />
-            <p className="text-xs text-gray-500 text-center mt-1.5 font-medium">年</p>
+        <label className="block text-sm font-semibold text-gray-700 mb-4">生年月日</label>
+        <div className="flex items-start gap-4">
+          {/* 年 */}
+          <div className="flex-1 group">
+            <div className="relative">
+              <input
+                type="text"
+                inputMode="numeric"
+                placeholder="1990"
+                value={year}
+                onChange={(e) => onChangeYear(e.target.value)}
+                maxLength={4}
+                className="w-full px-4 py-4 bg-white/60 backdrop-blur-sm border-2 border-purple-200 rounded-2xl focus:ring-2 focus:ring-purple-400 focus:border-purple-400 focus:bg-white/80 outline-none text-gray-800 text-center text-xl font-bold transition-all duration-200 hover:border-purple-300 hover:shadow-lg shadow-sm group-hover:scale-[1.02]"
+              />
+              <div className="absolute -bottom-8 left-0 right-0">
+                <span className="block text-xs font-bold text-gray-400 text-center uppercase tracking-wider">Year</span>
+              </div>
+            </div>
           </div>
-          <div className="w-16">
-            <input
-              type="text"
-              inputMode="numeric"
-              placeholder="月"
-              value={month}
-              onChange={(e) => onChangeMonth(e.target.value)}
-              maxLength={2}
-              className="w-full px-2 py-3 bg-white/60 backdrop-blur-sm border-2 border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-purple-400 focus:bg-white/80 outline-none text-gray-800 text-center text-lg font-semibold transition-all duration-200 hover:border-purple-300 hover:shadow-md shadow-sm"
-            />
-            <p className="text-xs text-gray-500 text-center mt-1.5 font-medium">月</p>
+
+          {/* 区切り */}
+          <div className="flex items-center pt-2">
+            <span className="text-2xl font-bold text-gray-300">/</span>
           </div>
-          <div className="w-16">
-            <input
-              type="text"
-              inputMode="numeric"
-              placeholder="日"
-              value={day}
-              onChange={(e) => onChangeDay(e.target.value)}
-              maxLength={2}
-              className="w-full px-2 py-3 bg-white/60 backdrop-blur-sm border-2 border-purple-200 rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-purple-400 focus:bg-white/80 outline-none text-gray-800 text-center text-lg font-semibold transition-all duration-200 hover:border-purple-300 hover:shadow-md shadow-sm"
-            />
-            <p className="text-xs text-gray-500 text-center mt-1.5 font-medium">日</p>
+
+          {/* 月 */}
+          <div className="w-20 group">
+            <div className="relative">
+              <input
+                type="text"
+                inputMode="numeric"
+                placeholder="01"
+                value={month}
+                onChange={(e) => onChangeMonth(e.target.value)}
+                maxLength={2}
+                className="w-full px-3 py-4 bg-white/60 backdrop-blur-sm border-2 border-purple-200 rounded-2xl focus:ring-2 focus:ring-purple-400 focus:border-purple-400 focus:bg-white/80 outline-none text-gray-800 text-center text-xl font-bold transition-all duration-200 hover:border-purple-300 hover:shadow-lg shadow-sm group-hover:scale-[1.02]"
+              />
+              <div className="absolute -bottom-8 left-0 right-0">
+                <span className="block text-xs font-bold text-gray-400 text-center uppercase tracking-wider">Mon</span>
+              </div>
+            </div>
+          </div>
+
+          {/* 区切り */}
+          <div className="flex items-center pt-2">
+            <span className="text-2xl font-bold text-gray-300">/</span>
+          </div>
+
+          {/* 日 */}
+          <div className="w-20 group">
+            <div className="relative">
+              <input
+                type="text"
+                inputMode="numeric"
+                placeholder="01"
+                value={day}
+                onChange={(e) => onChangeDay(e.target.value)}
+                maxLength={2}
+                className="w-full px-3 py-4 bg-white/60 backdrop-blur-sm border-2 border-purple-200 rounded-2xl focus:ring-2 focus:ring-purple-400 focus:border-purple-400 focus:bg-white/80 outline-none text-gray-800 text-center text-xl font-bold transition-all duration-200 hover:border-purple-300 hover:shadow-lg shadow-sm group-hover:scale-[1.02]"
+              />
+              <div className="absolute -bottom-8 left-0 right-0">
+                <span className="block text-xs font-bold text-gray-400 text-center uppercase tracking-wider">Day</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
