@@ -10,8 +10,8 @@ describe('App', () => {
   it('should show setup message when no settings', () => {
     render(<App />);
 
-    expect(screen.getByText('ようこそ')).toBeInTheDocument();
-    expect(screen.getByText('設定を開始する →')).toBeInTheDocument();
+    expect(screen.getByText('始めましょう')).toBeInTheDocument();
+    expect(screen.getByText(/あなたの/)).toBeInTheDocument();
   });
 
   it('should have settings button in header', () => {
@@ -24,7 +24,8 @@ describe('App', () => {
   it('should show app title', () => {
     render(<App />);
 
-    expect(screen.getByText('Life Countdown')).toBeInTheDocument();
+    const titles = screen.getAllByText('Life Countdown');
+    expect(titles.length).toBeGreaterThan(0);
   });
 
   it('should show privacy notice', () => {
@@ -47,7 +48,7 @@ describe('App', () => {
 
     render(<App />);
 
-    expect(screen.getByText('Remaining Time')).toBeInTheDocument();
-    expect(screen.getByText(/目標日:/)).toBeInTheDocument();
+    expect(screen.getByText('Time Remaining')).toBeInTheDocument();
+    expect(screen.getByText(/目標:/)).toBeInTheDocument();
   });
 });

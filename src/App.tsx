@@ -122,29 +122,83 @@ function App() {
             </div>
           </>
         ) : (
-          <div className="text-center animate-in fade-in zoom-in-95 duration-700">
-            {/* 初期画面カード */}
-            <div className="bg-white/10 backdrop-blur-xl rounded-3xl border-2 border-white/20 shadow-2xl p-10 md:p-16 max-w-lg mx-auto">
-              {/* アイコン */}
-              <div className="w-20 h-20 bg-white/15 backdrop-blur-sm rounded-2xl border border-white/20 flex items-center justify-center shadow-lg mx-auto mb-6">
-                <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
+          <div className="text-center relative">
+            {/* 背景の円形波紋 */}
+            <div className="absolute inset-0 flex items-center justify-center -z-10">
+              {[...Array(3)].map((_, i) => (
+                <div
+                  key={i}
+                  className="absolute w-64 h-64 border-2 border-white/10 rounded-full animate-ping"
+                  style={{
+                    animationDuration: `${3 + i}s`,
+                    animationDelay: `${i * 0.5}s`,
+                  }}
+                />
+              ))}
+            </div>
 
-              <h2 className="text-white text-2xl md:text-3xl font-bold mb-3">
-                ようこそ
-              </h2>
-              <p className="text-white/70 text-base mb-8 leading-relaxed">
-                生年月日と目標年齢を入力して、<br />
-                あなたの残り時間を可視化しましょう
-              </p>
-              <button
-                onClick={handleOpenModal}
-                className="px-8 py-4 bg-white text-purple-600 rounded-xl font-bold shadow-2xl shadow-white/25 hover:shadow-white/40 hover:scale-105 active:scale-95 transition-all duration-300"
-              >
-                設定を開始する →
-              </button>
+            {/* メインカード - スプラッシュアニメーション */}
+            <div className="relative animate-in fade-in zoom-in-90 duration-1000">
+              <div className="bg-gradient-to-br from-white/20 via-white/10 to-transparent backdrop-blur-2xl rounded-[2.5rem] border-2 border-white/30 shadow-2xl p-12 md:p-20 max-w-2xl mx-auto overflow-hidden">
+                {/* 光る粒子 */}
+                <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                  {[...Array(15)].map((_, i) => (
+                    <div
+                      key={i}
+                      className="absolute w-2 h-2 bg-white rounded-full opacity-60"
+                      style={{
+                        left: `${(i * 13 + 10) % 100}%`,
+                        top: `${(i * 17 + 20) % 100}%`,
+                        animation: `float ${4 + i * 0.3}s linear infinite`,
+                        animationDelay: `${i * 0.2}s`,
+                      }}
+                    />
+                  ))}
+                </div>
+
+                {/* グラデーション装飾 */}
+                <div className="absolute -top-32 -left-32 w-64 h-64 bg-gradient-to-br from-purple-400/40 to-transparent rounded-full blur-3xl animate-pulse-slow" />
+                <div className="absolute -bottom-32 -right-32 w-64 h-64 bg-gradient-to-br from-pink-400/40 to-transparent rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '1.5s' }} />
+
+                {/* コンテンツ */}
+                <div className="relative">
+                  {/* アイコン */}
+                  <div className="relative w-28 h-28 mx-auto mb-8 animate-in zoom-in-50 duration-700 delay-200">
+                    <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-3xl blur-xl opacity-60 animate-pulse-slow" />
+                    <div className="relative w-full h-full bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-sm rounded-3xl border-2 border-white/30 flex items-center justify-center shadow-2xl">
+                      <svg className="w-16 h-16 text-white drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                  </div>
+
+                  {/* タイトル */}
+                  <h2 className="text-white text-4xl md:text-5xl font-black mb-4 tracking-tight animate-in slide-in-from-bottom-4 duration-700 delay-300" style={{ textShadow: '0 0 40px rgba(255,255,255,0.3)' }}>
+                    Life Countdown
+                  </h2>
+
+                  <div className="h-1 w-24 bg-gradient-to-r from-transparent via-white to-transparent mx-auto mb-6 animate-in fade-in duration-700 delay-400" />
+
+                  <p className="text-white/80 text-lg md:text-xl mb-12 leading-relaxed animate-in slide-in-from-bottom-2 duration-700 delay-500">
+                    あなたの<span className="font-bold text-white">残り時間</span>を可視化して<br />
+                    今この瞬間を大切に生きよう
+                  </p>
+
+                  {/* CTA ボタン */}
+                  <button
+                    onClick={handleOpenModal}
+                    className="group relative px-10 py-5 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-lg font-bold rounded-2xl shadow-2xl shadow-purple-500/50 hover:shadow-purple-500/70 hover:scale-105 active:scale-95 transition-all duration-300 animate-in zoom-in-95 duration-700 delay-700 overflow-hidden"
+                  >
+                    <span className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <span className="relative flex items-center gap-3">
+                      始めましょう
+                      <svg className="w-6 h-6 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      </svg>
+                    </span>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         )}
