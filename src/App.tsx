@@ -3,6 +3,7 @@ import { useLocalStorage } from './hooks/useLocalStorage';
 import { SettingsModal } from './components/SettingsModal';
 import { UnitSwitcher } from './components/UnitSwitcher';
 import { CountdownCard } from './components/CountdownCard';
+import { ProgressBar } from './components/ProgressBar';
 import type { Settings } from './types';
 import type { TimeUnit } from './utils/timeUtils';
 import { parseDate, calculateGoalDate, calculateRemainingMs } from './utils/timeUtils';
@@ -32,20 +33,20 @@ function App() {
   }, []);
 
   // Calculate goal date and remaining time
-  const { goalDate, remainingMs } = useMemo(() => {
+  const { goalDate, remainingMs, birthDate } = useMemo(() => {
     if (!settings?.birthDate) {
-      return { goalDate: null, remainingMs: 0 };
+      return { goalDate: null, remainingMs: 0, birthDate: null };
     }
 
     const birthDate = parseDate(settings.birthDate);
     if (!birthDate) {
-      return { goalDate: null, remainingMs: 0 };
+      return { goalDate: null, remainingMs: 0, birthDate: null };
     }
 
     const goal = calculateGoalDate(birthDate, settings.targetAge);
     const remaining = calculateRemainingMs(goal, now);
 
-    return { goalDate: goal, remainingMs: remaining };
+    return { goalDate: goal, remainingMs: remaining, birthDate };
   }, [settings, now]);
 
   const handleOpenModal = useCallback(() => {
@@ -106,20 +107,23 @@ function App() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col items-center justify-center px-4 pb-8">
-        {hasSettings && goalDate ? (
+      <main className="flex-1 flex flex-col items-center justify-center px-4 pb-8 gap-8">
+        {hasSettings && goalDate && birthDate && settings ? (
           <>
             <CountdownCard
               remainingMs={remainingMs}
               selectedUnit={selectedUnit}
               goalDate={goalDate}
             />
-            <div className="mt-8">
-              <UnitSwitcher
-                selectedUnit={selectedUnit}
-                onUnitChange={handleUnitChange}
-              />
-            </div>
+            <UnitSwitcher
+              selectedUnit={selectedUnit}
+              onUnitChange={handleUnitChange}
+            />
+            <ProgressBar
+              birthDate={birthDate}
+              targetAge={settings.targetAge}
+              currentDate={now}
+            />
           </>
         ) : (
           <div className="text-center relative">
