@@ -392,10 +392,20 @@ export function SettingsModal({
     onClose();
   }, [currentSettings, onClose]);
 
+  const handleOverlayClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    // オーバーレイ自体がクリックされた場合のみ閉じる（モーダルコンテンツ内のクリックは無視）
+    if (e.target === e.currentTarget) {
+      handleCancel();
+    }
+  }, [handleCancel]);
+
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in duration-200">
+    <div
+      className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in duration-200"
+      onClick={handleOverlayClick}
+    >
       <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl max-w-md w-full p-8 border border-white/20 animate-in zoom-in-95 duration-300">
         <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-8">設定</h2>
 
