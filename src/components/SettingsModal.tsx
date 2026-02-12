@@ -53,8 +53,8 @@ function InputStep({
 
       {/* 生年月日 */}
       <div>
-        <label className="block text-base font-semibold text-gray-700 mb-5">生年月日</label>
-        <div className="flex items-start gap-4">
+        <label className="block text-lg font-semibold text-gray-700 mb-6">生年月日</label>
+        <div className="flex items-start gap-5">
           {/* 年 */}
           <div className="flex-1 group">
             <div className="relative">
@@ -79,7 +79,7 @@ function InputStep({
           </div>
 
           {/* 月 */}
-          <div className="w-20 group">
+          <div className="w-24 group">
             <div className="relative">
               <input
                 type="text"
@@ -88,7 +88,7 @@ function InputStep({
                 value={month}
                 onChange={(e) => onChangeMonth(e.target.value)}
                 maxLength={2}
-                className="w-full px-3 py-4 bg-white/60 backdrop-blur-sm border-2 border-purple-200 rounded-2xl focus:ring-2 focus:ring-purple-400 focus:border-purple-400 focus:bg-white/80 outline-none text-gray-800 text-center text-xl font-bold transition-all duration-200 hover:border-purple-300 hover:shadow-lg shadow-sm group-hover:scale-[1.02]"
+                className="w-full px-4 py-4 bg-white/60 backdrop-blur-sm border-2 border-purple-200 rounded-2xl focus:ring-2 focus:ring-purple-400 focus:border-purple-400 focus:bg-white/80 outline-none text-gray-800 text-center text-xl font-bold transition-all duration-200 hover:border-purple-300 hover:shadow-lg shadow-sm group-hover:scale-[1.02]"
               />
               <div className="absolute -bottom-8 left-0 right-0">
                 <span className="block text-xs font-bold text-gray-400 text-center uppercase tracking-wider">Mon</span>
@@ -98,11 +98,11 @@ function InputStep({
 
           {/* 区切り */}
           <div className="flex items-center pt-2">
-            <span className="text-2xl font-bold text-gray-300">/</span>
+            <span className="text-3xl font-bold text-gray-300">/</span>
           </div>
 
           {/* 日 */}
-          <div className="w-20 group">
+          <div className="w-24 group">
             <div className="relative">
               <input
                 type="text"
@@ -111,7 +111,7 @@ function InputStep({
                 value={day}
                 onChange={(e) => onChangeDay(e.target.value)}
                 maxLength={2}
-                className="w-full px-3 py-4 bg-white/60 backdrop-blur-sm border-2 border-purple-200 rounded-2xl focus:ring-2 focus:ring-purple-400 focus:border-purple-400 focus:bg-white/80 outline-none text-gray-800 text-center text-xl font-bold transition-all duration-200 hover:border-purple-300 hover:shadow-lg shadow-sm group-hover:scale-[1.02]"
+                className="w-full px-4 py-4 bg-white/60 backdrop-blur-sm border-2 border-purple-200 rounded-2xl focus:ring-2 focus:ring-purple-400 focus:border-purple-400 focus:bg-white/80 outline-none text-gray-800 text-center text-xl font-bold transition-all duration-200 hover:border-purple-300 hover:shadow-lg shadow-sm group-hover:scale-[1.02]"
               />
               <div className="absolute -bottom-8 left-0 right-0">
                 <span className="block text-xs font-bold text-gray-400 text-center uppercase tracking-wider">Day</span>
@@ -122,10 +122,10 @@ function InputStep({
       </div>
 
       {/* 目標年齢 */}
-      <div className="pt-2">
-        <label className="block text-base font-semibold text-gray-700 mb-4">
+      <div className="pt-4">
+        <label className="block text-lg font-semibold text-gray-700 mb-5">
           目標年齢
-          <span className="ml-4 px-4 py-1.5 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold text-xl rounded-full shadow-lg">{targetAge} 歳</span>
+          <span className="ml-5 px-5 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold text-2xl rounded-full shadow-lg">{targetAge} 歳</span>
         </label>
         <div className="relative">
           <input
@@ -143,8 +143,8 @@ function InputStep({
           <span>150歳</span>
         </div>
         {/* 数値入力（補助） */}
-        <div className="mt-5 flex items-center gap-3 bg-purple-50/50 backdrop-blur-sm rounded-xl px-4 py-3 border border-purple-100">
-          <span className="text-sm text-gray-600 font-medium">直接入力：</span>
+        <div className="mt-6 flex items-center gap-4 bg-purple-50/50 backdrop-blur-sm rounded-2xl px-6 py-4 border border-purple-100">
+          <span className="text-base text-gray-600 font-semibold">直接入力：</span>
           <input
             type="number"
             min={1}
@@ -154,9 +154,9 @@ function InputStep({
               const v = Number(e.target.value);
               if (v >= 1 && v <= 150) onChangeTargetAge(v);
             }}
-            className="w-24 px-4 py-2 bg-white border-2 border-purple-200 rounded-xl text-center text-base text-gray-800 font-semibold focus:ring-2 focus:ring-purple-400 focus:border-purple-400 outline-none transition-all"
+            className="w-28 px-5 py-2.5 bg-white border-2 border-purple-200 rounded-xl text-center text-lg text-gray-800 font-bold focus:ring-2 focus:ring-purple-400 focus:border-purple-400 outline-none transition-all"
           />
-          <span className="text-sm text-gray-600 font-medium">歳</span>
+          <span className="text-base text-gray-600 font-semibold">歳</span>
         </div>
       </div>
 
@@ -406,8 +406,8 @@ export function SettingsModal({
       className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in duration-200"
       onClick={handleOverlayClick}
     >
-      <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl max-w-xl w-full p-10 md:p-12 border border-white/20 animate-in zoom-in-95 duration-300">
-        <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-10">設定</h2>
+      <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl max-w-2xl w-full p-10 md:p-14 border border-white/20 animate-in zoom-in-95 duration-300">
+        <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-12">設定</h2>
 
         {step === 1 ? (
           <InputStep
