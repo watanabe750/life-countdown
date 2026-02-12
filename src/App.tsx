@@ -80,30 +80,32 @@ function App() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
-      <header className="flex justify-between items-center p-4 md:p-6 animate-in fade-in slide-in-from-top duration-500">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-white/15 backdrop-blur-sm rounded-xl border border-white/20 flex items-center justify-center shadow-lg">
-            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+      <header className="flex justify-center items-center p-4 md:p-6 animate-in fade-in slide-in-from-top duration-500">
+        <div className="w-full max-w-6xl flex justify-between items-center px-4 md:px-8">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-white/15 backdrop-blur-sm rounded-xl border border-white/20 flex items-center justify-center shadow-lg">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h1 className="text-2xl md:text-3xl font-black text-white tracking-tight">
+              Life Countdown
+            </h1>
           </div>
-          <h1 className="text-2xl md:text-3xl font-black text-white tracking-tight">
-            Life Countdown
-          </h1>
+          <button
+            onClick={handleOpenModal}
+            className={`
+              px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300
+              ${
+                hasSettings
+                  ? 'bg-white/15 backdrop-blur-sm text-white border border-white/20 hover:bg-white/25 hover:scale-105 active:scale-95 shadow-lg'
+                  : 'bg-white text-purple-600 shadow-xl shadow-white/25 animate-pulse hover:shadow-2xl hover:scale-105'
+              }
+            `}
+          >
+            ⚙️ 設定
+          </button>
         </div>
-        <button
-          onClick={handleOpenModal}
-          className={`
-            px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300
-            ${
-              hasSettings
-                ? 'bg-white/15 backdrop-blur-sm text-white border border-white/20 hover:bg-white/25 hover:scale-105 active:scale-95 shadow-lg'
-                : 'bg-white text-purple-600 shadow-xl shadow-white/25 animate-pulse hover:shadow-2xl hover:scale-105'
-            }
-          `}
-        >
-          ⚙️ 設定
-        </button>
       </header>
 
       {/* Main Content */}
