@@ -147,7 +147,15 @@ export function CountdownCard({
           <div className="mb-8">
             <div className="flex items-baseline justify-center gap-4">
               <span
-                className="text-8xl md:text-9xl font-black text-white tracking-tighter drop-shadow-[0_0_30px_rgba(255,255,255,0.5)] transition-all duration-300"
+                className={`font-black text-white tracking-tighter drop-shadow-[0_0_30px_rgba(255,255,255,0.5)] transition-all duration-300 ${
+                  animatedValue.length > 13
+                    ? 'text-3xl md:text-5xl'
+                    : animatedValue.length > 10
+                      ? 'text-4xl md:text-6xl'
+                      : animatedValue.length > 7
+                        ? 'text-5xl md:text-7xl'
+                        : 'text-8xl md:text-9xl'
+                }`}
                 style={{
                   fontFeatureSettings: '"tnum"',
                   textShadow: '0 0 40px rgba(255,255,255,0.3), 0 0 80px rgba(167,139,250,0.3)',
@@ -157,7 +165,9 @@ export function CountdownCard({
                 {animatedValue}
               </span>
               <div className="flex flex-col items-start mb-4">
-                <span className="text-3xl md:text-4xl font-bold text-white/90">{unitLabel}</span>
+                <span className={`font-bold text-white/90 ${
+                  animatedValue.length > 10 ? 'text-xl md:text-2xl' : 'text-3xl md:text-4xl'
+                }`}>{unitLabel}</span>
                 <div className="w-full h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mt-1 animate-pulse" />
               </div>
             </div>
