@@ -165,31 +165,31 @@ function App() {
               {/* Quick Stats Card - flex-1 to fill remaining height */}
               <div className="relative flex-1 animate-in fade-in slide-in-from-right duration-700 delay-300">
                 <div className="absolute -inset-4 bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-blue-500/10 rounded-full blur-2xl animate-pulse-slow" />
-                <div className="relative bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 p-6 shadow-xl h-full flex flex-col">
+                <div className="relative bg-white/10 backdrop-blur-sm rounded-[2rem] border-2 border-white/30 p-6 shadow-2xl h-full flex flex-col">
                   <h3 className="text-white/90 text-sm font-bold mb-4 flex items-center gap-2">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                     </svg>
                     Quick Stats
                   </h3>
-                  <div className="flex-1 grid grid-cols-2 gap-3 auto-rows-fr">
-                    <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10 flex flex-col justify-center">
+                  <div className="flex-1 grid grid-cols-2 gap-3 auto-rows-fr tabular-nums">
+                    <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-4 border border-white/15 flex flex-col justify-center">
                       <div className="text-white/60 text-xs font-medium mb-1">誕生日</div>
                       <div className="text-white text-base font-bold">
                         {birthDate.toLocaleDateString('ja-JP', { year: 'numeric', month: 'short', day: 'numeric' })}
                       </div>
                     </div>
-                    <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10 flex flex-col justify-center">
+                    <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-4 border border-white/15 flex flex-col justify-center">
                       <div className="text-white/60 text-xs font-medium mb-1">目標年齢</div>
                       <div className="text-white text-base font-bold">{settings.targetAge} 歳</div>
                     </div>
-                    <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10 flex flex-col justify-center">
+                    <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-4 border border-white/15 flex flex-col justify-center">
                       <div className="text-white/60 text-xs font-medium mb-1">目標日</div>
                       <div className="text-white text-base font-bold">
                         {goalDate.toLocaleDateString('ja-JP', { year: 'numeric', month: 'short', day: 'numeric' })}
                       </div>
                     </div>
-                    <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10 flex flex-col justify-center">
+                    <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-4 border border-white/15 flex flex-col justify-center">
                       <div className="text-white/60 text-xs font-medium mb-1">現在の年齢</div>
                       <div className="text-white text-base font-bold">
                         {(() => {
@@ -200,7 +200,7 @@ function App() {
                         })()} 歳
                       </div>
                     </div>
-                    <div className="col-span-2 bg-gradient-to-r from-purple-500/10 to-pink-500/10 backdrop-blur-sm rounded-xl p-4 border border-white/15 flex flex-col justify-center">
+                    <div className="col-span-2 bg-gradient-to-r from-purple-500/10 to-pink-500/10 backdrop-blur-sm rounded-2xl p-4 border border-white/15 flex flex-col justify-center">
                       <div className="text-white/60 text-xs font-medium mb-1">次の誕生日まで</div>
                       <div className="text-white text-base font-bold">
                         {(() => {
