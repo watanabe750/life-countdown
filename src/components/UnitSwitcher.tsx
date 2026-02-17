@@ -39,10 +39,10 @@ export function UnitSwitcher({ selectedUnit, onUnitChange }: UnitSwitcherProps) 
       {/* 背景の光のオーラ */}
       <div className="absolute -inset-4 bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-purple-500/20 rounded-full blur-2xl animate-pulse-slow" />
 
-      <div className="relative flex flex-wrap justify-center gap-2 md:gap-3 p-2 bg-white/5 backdrop-blur-sm rounded-[2rem] border-2 border-white/30">
+      <div className="relative flex flex-wrap justify-center gap-2 md:gap-3 p-3 bg-white/5 backdrop-blur-sm rounded-3xl border-2 border-white/30">
         {/* 動くインジケーター背景 */}
         <div
-          className="absolute top-2 h-[calc(100%-1rem)] bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl shadow-lg shadow-purple-500/50 transition-all duration-500 ease-out"
+          className="absolute top-3 h-[calc(100%-1.5rem)] bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl shadow-lg shadow-purple-500/50 transition-all duration-500 ease-out"
           style={{
             left: indicatorStyle.left,
             width: indicatorStyle.width,

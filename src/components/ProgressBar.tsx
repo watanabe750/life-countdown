@@ -24,14 +24,14 @@ export function ProgressBar({ birthDate, targetAge, currentDate }: ProgressBarPr
   }, [birthDate, targetAge, currentDate]);
 
   return (
-    <div className="w-full max-w-3xl animate-in fade-in slide-in-from-bottom-3 duration-700 delay-200">
+    <div className="w-full animate-in fade-in slide-in-from-bottom-3 duration-700 delay-200">
       {/* 背景の光のオーラ */}
       <div className="relative">
-        <div className="absolute -inset-6 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-full blur-2xl animate-pulse-slow" />
+        <div className="absolute -inset-6 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-3xl blur-2xl animate-pulse-slow" />
 
-        <div className="relative bg-white/10 backdrop-blur-sm rounded-[2rem] border-2 border-white/30 p-6 md:p-8 shadow-2xl">
+        <div className="relative bg-white/10 backdrop-blur-sm rounded-3xl border-2 border-white/30 shadow-2xl" style={{ padding: '2.5rem 3rem' }}>
           {/* ヘッダー */}
-          <div className="flex justify-between items-baseline mb-4">
+          <div className="flex justify-between items-baseline mb-5">
             <h3 className="text-white/90 text-sm md:text-base font-bold flex items-center gap-2">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
@@ -66,7 +66,7 @@ export function ProgressBar({ birthDate, targetAge, currentDate }: ProgressBarPr
           </div>
 
           {/* 経過 / 残り 日数 */}
-          <div className="mt-4 flex justify-between text-xs tabular-nums">
+          <div className="mt-5 flex justify-between text-xs tabular-nums">
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
               <span className="text-white/70 font-medium">{elapsed.toLocaleString()} 日経過</span>
