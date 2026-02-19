@@ -78,7 +78,7 @@ export function getUnitLabel(unit: TimeUnit): string {
   const labels: Record<TimeUnit, string> = {
     years: '年',
     months: '月',
-    weeks: '週間',
+    weeks: '週',
     days: '日',
     hours: '時間',
     minutes: '分',
