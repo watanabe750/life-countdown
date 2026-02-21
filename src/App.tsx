@@ -147,7 +147,7 @@ function App() {
     <div className="min-h-screen flex flex-col">
       {/* Header */}
       <header
-        className="flex justify-center items-center px-6 md:px-10 animate-in fade-in slide-in-from-top duration-500"
+        className="flex justify-center items-center px-6 md:px-10 animate-in fade-in slide-in-from-top duration-500 overflow-visible"
         style={{ paddingTop: '2.5rem', paddingBottom: '1.5rem' }}
       >
         <div className="w-full max-w-7xl flex flex-col gap-4">
@@ -219,19 +219,17 @@ function App() {
                 <div className="w-full animate-in fade-in slide-in-from-bottom-3 duration-700 delay-200">
                   <div className="relative">
                     <div className="absolute -inset-6 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-3xl blur-2xl animate-pulse-slow" />
-                    <div className="relative bg-white/10 backdrop-blur-sm rounded-3xl border-2 border-white/30 shadow-2xl" style={{ padding: '2.5rem 3rem' }}>
-                      <div className="flex justify-between items-baseline mb-5">
-                        <h3 className="text-white/90 text-sm font-bold flex items-center gap-2">
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                          </svg>
-                          {activeTarget.label}
-                        </h3>
-                        <div className="text-2xl font-black tabular-nums bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                          {goalDate.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })}
-                        </div>
+                    <div className="relative bg-white/10 backdrop-blur-sm rounded-3xl border-2 border-white/30 shadow-2xl" style={{ padding: '2rem 2rem' }}>
+                      <h3 className="text-white/90 text-sm font-bold flex items-center gap-2 mb-3">
+                        <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        {activeTarget.label}
+                      </h3>
+                      <div className="text-xl font-black tabular-nums bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-2">
+                        {goalDate.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })}
                       </div>
-                      <div className="text-white/60 text-sm text-center mt-2">
+                      <div className="text-white/60 text-sm">
                         残り {Math.ceil(remainingMs / (24 * 60 * 60 * 1000)).toLocaleString()} 日
                       </div>
                     </div>
@@ -242,7 +240,7 @@ function App() {
               {/* Quick Stats Card */}
               <div className="relative flex-1 animate-in fade-in slide-in-from-right duration-700 delay-300">
                 <div className="absolute -inset-4 bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-blue-500/10 rounded-3xl blur-2xl animate-pulse-slow" />
-                <div className="relative bg-white/10 backdrop-blur-sm rounded-3xl border-2 border-white/30 shadow-2xl h-full flex flex-col" style={{ padding: '2.5rem 3rem' }}>
+                <div className="relative bg-white/10 backdrop-blur-sm rounded-3xl border-2 border-white/30 shadow-2xl h-full flex flex-col" style={{ padding: '2rem 2rem' }}>
                   <h3 className="text-white/90 text-sm font-bold mb-5 flex items-center gap-2">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />

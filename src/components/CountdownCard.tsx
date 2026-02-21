@@ -110,7 +110,7 @@ export function CountdownCard({
           transform: `perspective(1000px) rotateX(${-mousePosition.y * 5}deg) rotateY(${mousePosition.x * 5}deg) scale3d(1.02, 1.02, 1.02)`,
           transition: 'transform 0.2s ease-out',
         }}
-        className="relative bg-gradient-to-br from-white/20 via-white/10 to-transparent backdrop-blur-2xl rounded-3xl border-2 border-white/30 shadow-2xl p-10 md:p-16 overflow-hidden"
+        className="relative bg-gradient-to-br from-white/20 via-white/10 to-transparent backdrop-blur-2xl rounded-3xl border-2 border-white/30 shadow-2xl p-8 md:p-12 overflow-hidden"
       >
         {/* 光の粒子エフェクト */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">

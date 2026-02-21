@@ -8,6 +8,8 @@ interface TargetTabsProps {
   onEdit: (target: Target) => void;
 }
 
+const MAX_TARGETS = 10;
+
 export function TargetTabs({ targets, activeId, onSelect, onAdd, onEdit }: TargetTabsProps) {
   return (
     <div className="flex items-center gap-2 flex-wrap">
@@ -30,7 +32,7 @@ export function TargetTabs({ targets, activeId, onSelect, onAdd, onEdit }: Targe
             {/* 編集ボタン（ホバー時に表示） */}
             <button
               onClick={(e) => { e.stopPropagation(); onEdit(target); }}
-              className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-white/80 rounded-full text-gray-500 hover:text-purple-600 hover:bg-white opacity-0 group-hover:opacity-100 transition-all duration-200 flex items-center justify-center shadow-sm"
+              className="absolute top-0 right-0 w-5 h-5 bg-white/80 rounded-full text-gray-500 hover:text-purple-600 hover:bg-white opacity-0 group-hover:opacity-100 transition-all duration-200 flex items-center justify-center shadow-sm translate-x-1/3 -translate-y-1/3"
               title="編集"
             >
               <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -41,7 +43,8 @@ export function TargetTabs({ targets, activeId, onSelect, onAdd, onEdit }: Targe
         );
       })}
 
-      {/* 追加ボタン */}
+      {/* 追加ボタン（上限10まで） */}
+      {targets.length < MAX_TARGETS && (
       <button
         onClick={onAdd}
         className="px-3 py-2 rounded-2xl text-sm font-bold bg-white/10 text-white/70 hover:bg-white/20 hover:text-white border-2 border-white/20 border-dashed transition-all duration-200 flex items-center gap-1"
@@ -51,6 +54,7 @@ export function TargetTabs({ targets, activeId, onSelect, onAdd, onEdit }: Targe
         </svg>
         追加
       </button>
+      )}
     </div>
   );
 }
