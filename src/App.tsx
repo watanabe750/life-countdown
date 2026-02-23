@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useLocalStorage } from './hooks/useLocalStorage';
-import { SettingsModal } from './components/SettingsModal';
 import { TargetModal } from './components/TargetModal';
 import { TargetTabs } from './components/TargetTabs';
 import { UnitSwitcher } from './components/UnitSwitcher';
@@ -24,7 +23,6 @@ function App() {
   const [activeTargetId, setActiveTargetId] = useLocalStorage<string>(STORAGE_KEY_ACTIVE_TARGET, '');
   const [selectedUnit, setSelectedUnit] = useLocalStorage<TimeUnit>(STORAGE_KEY_UNIT, 'days');
 
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isTargetModalOpen, setIsTargetModalOpen] = useState(false);
   const [editingTarget, setEditingTarget] = useState<Target | null>(null);
   const [now, setNow] = useState(new Date());
@@ -79,11 +77,8 @@ function App() {
   // キーボードショートカット
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (isSettingsOpen || isTargetModalOpen) {
-        if (e.key === 'Escape') {
-          setIsSettingsOpen(false);
-          setIsTargetModalOpen(false);
-        }
+      if (isTargetModalOpen) {
+        if (e.key === 'Escape') setIsTargetModalOpen(false);
         return;
       }
       if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
@@ -98,7 +93,7 @@ function App() {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isSettingsOpen, isTargetModalOpen, setSelectedUnit]);
+  }, [isTargetModalOpen, setSelectedUnit]);
 
   // ターゲット操作
   const handleAddTarget = useCallback(() => {
@@ -128,19 +123,6 @@ function App() {
     });
   }, [editingTarget, setTargets, setActiveTargetId]);
 
-  // 旧設定モーダル（互換用）
-  const handleSaveLegacySettings = useCallback((settings: Settings) => {
-    const existing = targets.find((t) => t.id === 'migrated-legacy');
-    const updated: Target = {
-      id: existing?.id ?? 'migrated-legacy',
-      type: 'age',
-      label: existing?.type === 'age' ? existing.label : '人生の目標',
-      birthDate: settings.birthDate,
-      targetAge: settings.targetAge,
-    };
-    handleSaveTarget(updated);
-  }, [targets, handleSaveTarget]);
-
   const hasTargets = targets.length > 0;
 
   return (
@@ -162,18 +144,17 @@ function App() {
                 Life Countdown
               </h1>
             </div>
-            <button
-              onClick={() => setIsSettingsOpen(true)}
-              className={`
-                px-7 py-3.5 rounded-2xl text-base font-bold transition-all duration-300
-                ${hasTargets
-                  ? 'bg-white/15 backdrop-blur-sm text-white border-2 border-white/25 hover:bg-white/25 hover:scale-105 active:scale-95 shadow-lg'
-                  : 'bg-white text-purple-600 shadow-xl shadow-white/25 animate-pulse hover:shadow-2xl hover:scale-105'
-                }
-              `}
-            >
-              ⚙️ 設定
-            </button>
+            {hasTargets && (
+              <button
+                onClick={handleAddTarget}
+                className="px-5 py-3 rounded-2xl text-sm font-bold transition-all duration-300 bg-white/15 backdrop-blur-sm text-white border-2 border-white/25 hover:bg-white/25 hover:scale-105 active:scale-95 shadow-lg flex items-center gap-2"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
+                </svg>
+                目標を追加
+              </button>
+            )}
           </div>
 
           {/* タブ */}
@@ -367,7 +348,7 @@ function App() {
                   </p>
 
                   <button
-                    onClick={() => setIsSettingsOpen(true)}
+                    onClick={handleAddTarget}
                     className="group relative px-10 py-5 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-lg font-bold rounded-2xl shadow-2xl shadow-purple-500/50 hover:shadow-purple-500/70 hover:scale-105 active:scale-95 transition-all duration-300 animate-in zoom-in-95 duration-700 delay-700 overflow-hidden"
                   >
                     <span className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -397,22 +378,6 @@ function App() {
         </div>
         <p className="text-white/40 text-xs mt-3 font-medium">今日を大切に ✨</p>
       </footer>
-
-      {/* 旧設定モーダル（初回設定 / 設定ボタン用） */}
-      <SettingsModal
-        isOpen={isSettingsOpen}
-        onClose={() => setIsSettingsOpen(false)}
-        onSave={handleSaveLegacySettings}
-        onReset={() => {
-          setTargets([]);
-          setActiveTargetId('');
-        }}
-        currentSettings={
-          activeTarget?.type === 'age'
-            ? { birthDate: activeTarget.birthDate, targetAge: activeTarget.targetAge }
-            : null
-        }
-      />
 
       {/* 目標追加・編集モーダル */}
       <TargetModal

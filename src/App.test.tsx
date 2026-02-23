@@ -14,11 +14,16 @@ describe('App', () => {
     expect(screen.getByText(/あなたの/)).toBeInTheDocument();
   });
 
-  it('should have settings button in header', () => {
+  it('should have add target button when targets exist', () => {
+    localStorage.setItem(
+      'life-countdown-targets',
+      JSON.stringify([{ id: 't1', type: 'age', label: '人生の目標', birthDate: '2000-05-20', targetAge: 80 }])
+    );
+    localStorage.setItem('life-countdown-active-target', JSON.stringify('t1'));
+
     render(<App />);
 
-    const settingsButtons = screen.getAllByRole('button', { name: /設定/ });
-    expect(settingsButtons.length).toBeGreaterThan(0);
+    expect(screen.getByRole('button', { name: /目標を追加/ })).toBeInTheDocument();
   });
 
   it('should show app title', () => {
@@ -36,15 +41,12 @@ describe('App', () => {
     ).toBeInTheDocument();
   });
 
-  it('should show countdown when settings are saved', () => {
-    // Pre-populate localStorage with settings
+  it('should show countdown when targets are saved', () => {
     localStorage.setItem(
-      'life-countdown-settings',
-      JSON.stringify({
-        birthDate: '2000-05-20',
-        targetAge: 80,
-      })
+      'life-countdown-targets',
+      JSON.stringify([{ id: 't1', type: 'age', label: '人生の目標', birthDate: '2000-05-20', targetAge: 80 }])
     );
+    localStorage.setItem('life-countdown-active-target', JSON.stringify('t1'));
 
     render(<App />);
 
