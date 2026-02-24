@@ -120,7 +120,7 @@ export function TargetModal({ isOpen, onClose, onSave, onDelete, editTarget }: T
       className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in duration-200"
       onClick={handleOverlayClick}
     >
-      <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl max-w-lg w-full p-8 md:p-10 border border-white/20 animate-in zoom-in-95 duration-300">
+      <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl max-w-lg w-full border border-white/20 animate-in zoom-in-95 duration-300 overflow-y-auto" style={{ maxHeight: 'calc(100dvh - 2rem)', padding: '2rem 2.5rem' }}>
         <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-8">
           {isEdit ? '目標を編集' : '目標を追加'}
         </h2>
