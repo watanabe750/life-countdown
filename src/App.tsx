@@ -10,7 +10,7 @@ import type { TimeUnit } from './utils/timeUtils';
 import { parseDate, calculateGoalDate, calculateRemainingMs } from './utils/timeUtils';
 
 const STORAGE_KEY_SETTINGS = 'life-countdown-settings';
-const STORAGE_KEY_UNIT = 'life-countdown-unit';
+const STORAGE_KEY_UNIT_MAP = 'life-countdown-unit-map';
 const STORAGE_KEY_TARGETS = 'life-countdown-targets';
 const STORAGE_KEY_ACTIVE_TARGET = 'life-countdown-active-target';
 const UNITS: TimeUnit[] = ['years', 'months', 'weeks', 'days', 'hours', 'minutes', 'seconds'];
@@ -21,7 +21,7 @@ function App() {
 
   const [targets, setTargets] = useLocalStorage<Target[]>(STORAGE_KEY_TARGETS, []);
   const [activeTargetId, setActiveTargetId] = useLocalStorage<string>(STORAGE_KEY_ACTIVE_TARGET, '');
-  const [selectedUnit, setSelectedUnit] = useLocalStorage<TimeUnit>(STORAGE_KEY_UNIT, 'days');
+  const [unitMap, setUnitMap] = useLocalStorage<Record<string, TimeUnit>>(STORAGE_KEY_UNIT_MAP, {});
 
   const [isTargetModalOpen, setIsTargetModalOpen] = useState(false);
   const [editingTarget, setEditingTarget] = useState<Target | null>(null);
@@ -47,6 +47,22 @@ function App() {
     () => targets.find((t) => t.id === activeTargetId) ?? targets[0] ?? null,
     [targets, activeTargetId]
   );
+
+  // 目標ごとの選択単位（デフォルト: 年齢ベース→'years'、日付ベース→'days'）
+  const selectedUnit: TimeUnit = useMemo(() => {
+    if (!activeTarget) return 'days';
+    return unitMap[activeTarget.id] ?? (activeTarget.type === 'age' ? 'years' : 'days');
+  }, [activeTarget, unitMap]);
+
+  const setSelectedUnit = useCallback((unitOrUpdater: TimeUnit | ((prev: TimeUnit) => TimeUnit)) => {
+    if (!activeTarget) return;
+    const id = activeTarget.id;
+    setUnitMap((prev) => {
+      const current = prev[id] ?? (activeTarget.type === 'age' ? 'years' : 'days');
+      const next = typeof unitOrUpdater === 'function' ? unitOrUpdater(current) : unitOrUpdater;
+      return { ...prev, [id]: next };
+    });
+  }, [activeTarget, setUnitMap]);
 
   // 毎秒更新
   useEffect(() => {
