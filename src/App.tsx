@@ -5,6 +5,7 @@ import { TargetTabs } from './components/TargetTabs';
 import { UnitSwitcher } from './components/UnitSwitcher';
 import { CountdownCard } from './components/CountdownCard';
 import { ProgressBar } from './components/ProgressBar';
+import { GoalAchieved } from './components/GoalAchieved';
 import type { Settings, Target } from './types';
 import type { TimeUnit } from './utils/timeUtils';
 import { parseDate, calculateGoalDate, calculateRemainingMs } from './utils/timeUtils';
@@ -188,7 +189,9 @@ function App() {
 
       {/* Main Content */}
       <main className="flex-1 flex items-center justify-center px-6 md:px-10 py-6">
-        {hasTargets && activeTarget && goalDate ? (
+        {hasTargets && activeTarget && goalDate && remainingMs <= 0 ? (
+          <GoalAchieved label={activeTarget.label} goalDate={goalDate} />
+        ) : hasTargets && activeTarget && goalDate ? (
           <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 animate-in fade-in duration-700">
             {/* Left Column */}
             <div className="lg:col-span-7 flex flex-col gap-6">
