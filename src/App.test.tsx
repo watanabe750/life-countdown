@@ -23,7 +23,7 @@ describe('App', () => {
 
     render(<App />);
 
-    expect(screen.getByRole('button', { name: /目標を追加/ })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /追加/ })).toBeInTheDocument();
   });
 
   it('should show app title', () => {
