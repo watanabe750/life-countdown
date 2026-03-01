@@ -16,16 +16,17 @@ export function TargetTabs({ targets, activeId, onSelect, onAdd, onEdit }: Targe
       {targets.map((target) => {
         const isActive = target.id === activeId;
         return (
-          <div key={target.id} className="relative group flex items-center">
+          <div key={target.id} className="relative group flex items-center" style={{ marginRight: '4px' }}>
             <button
               onClick={() => onSelect(target.id)}
               className={`
-                px-4 py-2 rounded-2xl text-sm font-bold transition-all duration-200
+                rounded-2xl text-sm font-bold transition-all duration-200
                 ${isActive
                   ? 'bg-white text-purple-700 shadow-lg shadow-white/20'
                   : 'bg-white/15 text-white/80 hover:bg-white/25 hover:text-white'
                 }
               `}
+              style={{ padding: '0.5rem 1.5rem 0.5rem 1rem' }}
             >
               {target.label}
             </button>
@@ -43,17 +44,21 @@ export function TargetTabs({ targets, activeId, onSelect, onAdd, onEdit }: Targe
         );
       })}
 
-      {/* 追加ボタン（上限10まで） */}
+      {/* 追加ボタン（上限10まで）— 区切り線で分離 */}
       {targets.length < MAX_TARGETS && (
-      <button
-        onClick={onAdd}
-        className="px-3 py-2 rounded-2xl text-sm font-bold bg-white/10 text-white/70 hover:bg-white/20 hover:text-white border-2 border-white/20 border-dashed transition-all duration-200 flex items-center gap-1"
-      >
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
-        </svg>
-        追加
-      </button>
+        <>
+          <div className="w-px h-5 bg-white/20 mx-1 shrink-0" />
+          <button
+            onClick={onAdd}
+            className="rounded-2xl text-sm font-bold bg-white/10 text-white/60 hover:bg-white/20 hover:text-white border border-white/20 border-dashed transition-all duration-200 flex items-center"
+            style={{ padding: '0.5rem 0.75rem', gap: '0.375rem' }}
+          >
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
+            </svg>
+            追加
+          </button>
+        </>
       )}
     </div>
   );

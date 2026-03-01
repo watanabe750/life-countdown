@@ -165,13 +165,15 @@ function App() {
 
           {/* タブ */}
           {hasTargets && (
-            <TargetTabs
-              targets={targets}
-              activeId={activeTarget?.id ?? ''}
-              onSelect={setActiveTargetId}
-              onAdd={handleAddTarget}
-              onEdit={handleEditTarget}
-            />
+            <div style={{ paddingTop: '0.25rem' }}>
+              <TargetTabs
+                targets={targets}
+                activeId={activeTarget?.id ?? ''}
+                onSelect={setActiveTargetId}
+                onAdd={handleAddTarget}
+                onEdit={handleEditTarget}
+              />
+            </div>
           )}
         </div>
       </header>
