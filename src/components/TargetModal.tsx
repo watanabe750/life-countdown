@@ -42,6 +42,7 @@ export function TargetModal({ isOpen, onClose, onSave, onDelete, editTarget }: T
   );
 
   const [error, setError] = useState<string | null>(null);
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
 
   const birthDateStr = useMemo(() => {
     if (!year || !month || !day) return '';
@@ -103,11 +104,9 @@ export function TargetModal({ isOpen, onClose, onSave, onDelete, editTarget }: T
   }, [validate, type, label, birthDateStr, targetAge, targetDate, editTarget, onSave, onClose]);
 
   const handleDelete = useCallback(() => {
-    if (window.confirm(`「${editTarget?.label}」を削除しますか？`)) {
-      onDelete?.();
-      onClose();
-    }
-  }, [editTarget, onDelete, onClose]);
+    onDelete?.();
+    onClose();
+  }, [onDelete, onClose]);
 
   const handleOverlayClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) onClose();
@@ -261,12 +260,34 @@ export function TargetModal({ isOpen, onClose, onSave, onDelete, editTarget }: T
               </button>
             </div>
             {isEdit && onDelete && (
-              <button
-                onClick={handleDelete}
-                className="w-full px-4 py-3 text-red-600 bg-red-50 rounded-xl hover:bg-red-100 active:scale-95 transition-all font-semibold text-sm"
-              >
-                この目標を削除
-              </button>
+              confirmingDelete ? (
+                <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex flex-col gap-3">
+                  <p className="text-red-700 text-sm font-semibold text-center">
+                    「{editTarget?.label}」を削除しますか？
+                  </p>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setConfirmingDelete(false)}
+                      className="flex-1 px-4 py-2.5 text-gray-700 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 active:scale-95 transition-all font-semibold text-sm"
+                    >
+                      キャンセル
+                    </button>
+                    <button
+                      onClick={handleDelete}
+                      className="flex-1 px-4 py-2.5 text-white bg-red-500 rounded-xl hover:bg-red-600 active:scale-95 transition-all font-bold text-sm"
+                    >
+                      削除する
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setConfirmingDelete(true)}
+                  className="w-full px-4 py-3 text-red-600 bg-red-50 rounded-xl hover:bg-red-100 active:scale-95 transition-all font-semibold text-sm"
+                >
+                  この目標を削除
+                </button>
+              )
             )}
           </div>
         </div>
