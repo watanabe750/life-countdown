@@ -127,12 +127,16 @@ export function TargetModal({ isOpen, onClose, onSave, onDelete, editTarget }: T
         <div className="space-y-6">
           {/* タイトル */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">タイトル</label>
+            <div className="flex justify-between items-baseline mb-2">
+              <label className="text-sm font-semibold text-gray-700">タイトル</label>
+              <span className="text-xs text-gray-400">{label.length}/20</span>
+            </div>
             <input
               type="text"
               placeholder="例：人生の目標、結婚記念日..."
               value={label}
               onChange={(e) => setLabel(e.target.value)}
+              maxLength={20}
               className="w-full px-4 py-3 bg-white border-2 border-purple-200 rounded-2xl focus:ring-2 focus:ring-purple-400 focus:border-purple-400 outline-none text-gray-800 font-medium transition-all"
             />
           </div>

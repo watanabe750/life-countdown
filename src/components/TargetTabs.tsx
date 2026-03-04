@@ -20,13 +20,14 @@ export function TargetTabs({ targets, activeId, onSelect, onAdd, onEdit }: Targe
             <button
               onClick={() => onSelect(target.id)}
               className={`
-                rounded-2xl text-sm font-bold transition-all duration-200
+                rounded-2xl text-sm font-bold transition-all duration-200 truncate
                 ${isActive
                   ? 'bg-white text-purple-700 shadow-lg shadow-white/20'
                   : 'bg-white/15 text-white/80 hover:bg-white/25 hover:text-white'
                 }
               `}
-              style={{ padding: '0.5rem 1.5rem 0.5rem 1rem' }}
+              style={{ padding: '0.5rem 1.5rem 0.5rem 1rem', maxWidth: '10rem' }}
+              title={target.label}
             >
               {target.label}
             </button>
