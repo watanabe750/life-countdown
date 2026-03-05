@@ -91,6 +91,22 @@ function App() {
   const progressTarget = activeTarget?.type === 'age' ? activeTarget : null;
   const progressBirthDate = progressTarget ? parseDate(progressTarget.birthDate) : null;
 
+  // 達成済みターゲットのIDセット
+  const achievedIds = useMemo(() => {
+    const set = new Set<string>();
+    for (const t of targets) {
+      let goal: Date | null = null;
+      if (t.type === 'age') {
+        const birth = parseDate(t.birthDate);
+        if (birth) goal = calculateGoalDate(birth, t.targetAge);
+      } else {
+        goal = parseDate(t.targetDate);
+      }
+      if (goal && calculateRemainingMs(goal, now) <= 0) set.add(t.id);
+    }
+    return set;
+  }, [targets, now]);
+
   // キーボードショートカット
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -169,6 +185,7 @@ function App() {
               <TargetTabs
                 targets={targets}
                 activeId={activeTarget?.id ?? ''}
+                achievedIds={achievedIds}
                 onSelect={setActiveTargetId}
                 onAdd={handleAddTarget}
                 onEdit={handleEditTarget}

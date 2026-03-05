@@ -3,6 +3,7 @@ import type { Target } from '../types';
 interface TargetTabsProps {
   targets: Target[];
   activeId: string;
+  achievedIds: Set<string>;
   onSelect: (id: string) => void;
   onAdd: () => void;
   onEdit: (target: Target) => void;
@@ -10,11 +11,12 @@ interface TargetTabsProps {
 
 const MAX_TARGETS = 10;
 
-export function TargetTabs({ targets, activeId, onSelect, onAdd, onEdit }: TargetTabsProps) {
+export function TargetTabs({ targets, activeId, achievedIds, onSelect, onAdd, onEdit }: TargetTabsProps) {
   return (
     <div className="flex items-center gap-2 flex-wrap">
       {targets.map((target) => {
         const isActive = target.id === activeId;
+        const isAchieved = achievedIds.has(target.id);
         return (
           <div key={target.id} className="relative group flex items-center" style={{ marginRight: '4px' }}>
             <button
@@ -29,6 +31,9 @@ export function TargetTabs({ targets, activeId, onSelect, onAdd, onEdit }: Targe
               style={{ padding: '0.5rem 1.5rem 0.5rem 1rem', maxWidth: '10rem' }}
               title={target.label}
             >
+              {isAchieved && (
+                <span style={{ marginRight: '0.25rem' }}>✓</span>
+              )}
               {target.label}
             </button>
             {/* 編集ボタン（常時表示） */}
