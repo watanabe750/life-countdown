@@ -45,22 +45,39 @@ export function TargetTabs({ targets, activeId, onSelect, onAdd, onEdit }: Targe
         );
       })}
 
-      {/* 追加ボタン（上限10まで）— 区切り線で分離 */}
-      {targets.length < MAX_TARGETS && (
-        <>
-          <div className="w-px h-5 bg-white/20 mx-1 shrink-0" />
+      {/* 追加ボタン — 区切り線で分離、上限時はグレーアウト＋ツールチップ */}
+      <>
+        <div className="w-px h-5 bg-white/20 mx-1 shrink-0" />
+        <div className="relative" style={{ isolation: 'isolate' }}>
           <button
-            onClick={onAdd}
-            className="rounded-2xl text-sm font-bold bg-white/10 text-white/60 hover:bg-white/20 hover:text-white border border-white/20 border-dashed transition-all duration-200 flex items-center"
-            style={{ padding: '0.5rem 0.75rem', gap: '0.375rem' }}
+            onClick={targets.length < MAX_TARGETS ? onAdd : undefined}
+            disabled={targets.length >= MAX_TARGETS}
+            className="rounded-2xl text-sm font-bold border border-dashed transition-all duration-200 flex items-center peer"
+            style={{
+              padding: '0.5rem 0.75rem',
+              gap: '0.375rem',
+              backgroundColor: targets.length >= MAX_TARGETS ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.10)',
+              color: targets.length >= MAX_TARGETS ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.60)',
+              borderColor: targets.length >= MAX_TARGETS ? 'rgba(255,255,255,0.10)' : 'rgba(255,255,255,0.20)',
+              cursor: targets.length >= MAX_TARGETS ? 'not-allowed' : 'pointer',
+            }}
           >
             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
             </svg>
             追加
           </button>
-        </>
-      )}
+          {targets.length >= MAX_TARGETS && (
+            <div
+              className="absolute bottom-full left-1/2 mb-2 px-3 py-1.5 bg-black/80 text-white text-xs rounded-lg whitespace-nowrap pointer-events-none opacity-0 peer-hover:opacity-100 transition-opacity duration-200 z-50"
+              style={{ transform: 'translateX(-50%)' }}
+            >
+              上限 {MAX_TARGETS} 件です
+              <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-black/80" />
+            </div>
+          )}
+        </div>
+      </>
     </div>
   );
 }
