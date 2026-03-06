@@ -403,7 +403,12 @@ function App() {
             データはローカルに保存され、外部送信されません
           </p>
         </div>
-        <p className="text-white/40 text-xs mt-3 font-medium">今日を大切に ✨</p>
+        {hasTargets && (
+          <p className="text-white/30 text-xs mt-2 font-medium">
+            <kbd className="font-sans">←</kbd> <kbd className="font-sans">→</kbd> キーで単位を切り替え
+          </p>
+        )}
+        <p className="text-white/40 text-xs mt-2 font-medium">今日を大切に ✨</p>
       </footer>
 
       {/* 目標追加・編集モーダル */}
