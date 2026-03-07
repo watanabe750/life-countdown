@@ -109,8 +109,9 @@ export function CountdownCard({
         style={{
           transform: `perspective(1000px) rotateX(${-mousePosition.y * 5}deg) rotateY(${mousePosition.x * 5}deg) scale3d(1.02, 1.02, 1.02)`,
           transition: 'transform 0.2s ease-out',
+          padding: '2.5rem 2rem 3rem',
         }}
-        className="relative bg-gradient-to-br from-white/20 via-white/10 to-transparent backdrop-blur-2xl rounded-3xl border-2 border-white/30 shadow-2xl p-8 md:p-12 overflow-hidden"
+        className="relative bg-gradient-to-br from-white/20 via-white/10 to-transparent backdrop-blur-2xl rounded-3xl border-2 border-white/30 shadow-2xl overflow-hidden"
       >
         {/* 光の粒子エフェクト */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -162,7 +163,11 @@ export function CountdownCard({
                 }}
                 key={animatedValue}
               >
-                {animatedValue}
+                {animatedValue.split('').map((ch, i) => (
+                  (ch === ',' || ch === '.') ? (
+                    <span key={i} style={{ fontSize: '0.45em', opacity: 0.7, letterSpacing: 0 }}>{ch}</span>
+                  ) : ch
+                ))}
               </span>
               <div className="flex flex-col items-start mb-4">
                 <span className={`font-bold text-white/90 ${
