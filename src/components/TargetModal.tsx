@@ -137,7 +137,7 @@ export function TargetModal({ isOpen, onClose, onSave, onDelete, editTarget }: T
               value={label}
               onChange={(e) => setLabel(e.target.value)}
               maxLength={20}
-              className="w-full px-4 py-3 bg-white border-2 border-purple-200 rounded-2xl focus:ring-2 focus:ring-purple-400 focus:border-purple-400 outline-none text-gray-800 font-medium transition-all"
+              className="w-full px-5 py-3 bg-white border-2 border-purple-200 rounded-2xl focus:ring-2 focus:ring-purple-400 focus:border-purple-400 outline-none text-gray-800 font-medium transition-all"
             />
           </div>
 
@@ -235,7 +235,7 @@ export function TargetModal({ isOpen, onClose, onSave, onDelete, editTarget }: T
                 value={targetDate}
                 onChange={(e) => setTargetDate(e.target.value)}
                 min={new Date().toISOString().split('T')[0]}
-                className="w-full px-4 py-3 bg-white border-2 border-purple-200 rounded-2xl focus:ring-2 focus:ring-purple-400 focus:border-purple-400 outline-none text-gray-800 font-medium transition-all"
+                className="w-full px-5 py-3 bg-white border-2 border-purple-200 rounded-2xl focus:ring-2 focus:ring-purple-400 focus:border-purple-400 outline-none text-gray-800 font-medium transition-all"
               />
             </div>
           )}
