@@ -289,9 +289,23 @@ function App() {
                           <div className="text-white/60 text-xs font-medium mb-1">次の誕生日まで</div>
                           <div className="text-white text-base font-bold">
                             {(() => {
-                              const nextBday = new Date(now.getFullYear(), progressBirthDate.getMonth(), progressBirthDate.getDate());
-                              if (nextBday <= now) nextBday.setFullYear(nextBday.getFullYear() + 1);
-                              return Math.ceil((nextBday.getTime() - now.getTime()) / (24 * 60 * 60 * 1000));
+                              const m = progressBirthDate.getMonth();
+                              const d = progressBirthDate.getDate();
+                              // 2/29生まれは非閏年では3/1を誕生日として扱う
+                              const bdayThisYear = new Date(now.getFullYear(), m, d);
+                              const isLeapDay = m === 1 && d === 29;
+                              const candidate = isLeapDay && bdayThisYear.getMonth() !== 1
+                                ? new Date(now.getFullYear(), 2, 1) // 非閏年は3/1
+                                : bdayThisYear;
+                              if (candidate <= now) {
+                                const nextYear = now.getFullYear() + 1;
+                                const next = new Date(nextYear, m, d);
+                                const nextFinal = isLeapDay && next.getMonth() !== 1
+                                  ? new Date(nextYear, 2, 1)
+                                  : next;
+                                return Math.ceil((nextFinal.getTime() - now.getTime()) / (24 * 60 * 60 * 1000));
+                              }
+                              return Math.ceil((candidate.getTime() - now.getTime()) / (24 * 60 * 60 * 1000));
                             })()} 日
                           </div>
                         </div>
