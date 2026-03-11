@@ -6,6 +6,7 @@ import { UnitSwitcher } from './components/UnitSwitcher';
 import { CountdownCard } from './components/CountdownCard';
 import { ProgressBar } from './components/ProgressBar';
 import { GoalAchieved } from './components/GoalAchieved';
+import { DataModal } from './components/DataModal';
 import type { Settings, Target } from './types';
 import type { TimeUnit } from './utils/timeUtils';
 import { parseDate, calculateGoalDate, calculateRemainingMs } from './utils/timeUtils';
@@ -25,6 +26,7 @@ function App() {
   const [unitMap, setUnitMap] = useLocalStorage<Record<string, TimeUnit>>(STORAGE_KEY_UNIT_MAP, {});
 
   const [isTargetModalOpen, setIsTargetModalOpen] = useState(false);
+  const [isDataModalOpen, setIsDataModalOpen] = useState(false);
   const [editingTarget, setEditingTarget] = useState<Target | null>(null);
   const [now, setNow] = useState(new Date());
 
@@ -156,6 +158,12 @@ function App() {
     });
   }, [editingTarget, setTargets, setActiveTargetId]);
 
+  const handleImport = useCallback(({ targets: newTargets, activeTargetId: newActiveId, unitMap: newUnitMap }: { targets: Target[]; activeTargetId: string; unitMap: Record<string, TimeUnit> }) => {
+    setTargets(newTargets);
+    setActiveTargetId(newActiveId);
+    setUnitMap(newUnitMap);
+  }, [setTargets, setActiveTargetId, setUnitMap]);
+
   const hasTargets = targets.length > 0;
 
   return (
@@ -177,6 +185,15 @@ function App() {
                 Life Countdown
               </h1>
             </div>
+            <button
+              onClick={() => setIsDataModalOpen(true)}
+              className="w-9 h-9 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-xl border border-white/20 flex items-center justify-center text-white/70 hover:text-white transition-all duration-200"
+              title="データ管理（エクスポート/インポート）"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+            </button>
           </div>
 
           {/* タブ */}
@@ -424,6 +441,16 @@ function App() {
         )}
         <p className="text-white/40 text-xs mt-2 font-medium">今日を大切に ✨</p>
       </footer>
+
+      {/* データ管理モーダル */}
+      <DataModal
+        isOpen={isDataModalOpen}
+        onClose={() => setIsDataModalOpen(false)}
+        targets={targets}
+        activeTargetId={activeTargetId}
+        unitMap={unitMap}
+        onImport={handleImport}
+      />
 
       {/* 目標追加・編集モーダル */}
       <TargetModal
