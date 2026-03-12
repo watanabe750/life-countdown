@@ -3,6 +3,7 @@ import { useEffect, useState, useMemo } from 'react';
 interface GoalAchievedProps {
   label: string;
   goalDate: Date;
+  isToday?: boolean;
 }
 
 const COLORS = [
@@ -21,7 +22,7 @@ interface Piece {
   shape: 'rect' | 'circle';
 }
 
-export function GoalAchieved({ label, goalDate }: GoalAchievedProps) {
+export function GoalAchieved({ label, goalDate, isToday = false }: GoalAchievedProps) {
   const [pieces, setPieces] = useState<Piece[]>([]);
   const [visible, setVisible] = useState(false);
 
@@ -87,12 +88,14 @@ export function GoalAchieved({ label, goalDate }: GoalAchievedProps) {
           <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-gradient-to-br from-purple-400/30 to-blue-400/30 rounded-full blur-3xl" />
 
           <div className="relative">
-            {/* トロフィーアイコン */}
-            <div className="text-7xl mb-6 animate-pulse-slow">🎉</div>
+            {/* アイコン */}
+            <div className="text-7xl mb-6 animate-pulse-slow">{isToday ? '🎂' : '🎉'}</div>
 
             <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-white/15 backdrop-blur-sm rounded-full border border-white/30">
-              <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse" />
-              <span className="text-white/90 text-sm font-bold tracking-wider uppercase">Goal Achieved</span>
+              <div className={`w-2 h-2 rounded-full animate-pulse ${isToday ? 'bg-pink-400' : 'bg-yellow-400'}`} />
+              <span className="text-white/90 text-sm font-bold tracking-wider uppercase">
+                {isToday ? 'Today is the Day' : 'Goal Achieved'}
+              </span>
             </div>
 
             <h2
@@ -101,11 +104,13 @@ export function GoalAchieved({ label, goalDate }: GoalAchievedProps) {
             >
               {label}
             </h2>
-            <p className="text-white/70 text-lg font-semibold mb-2">達成おめでとうございます！</p>
+            <p className="text-white/70 text-lg font-semibold mb-2">
+              {isToday ? '今日がその日です！' : '達成おめでとうございます！'}
+            </p>
             <p className="text-white/50 text-sm">{goalDateString}</p>
 
             {/* キラキラライン */}
-            <div className="mt-6 h-1 w-32 mx-auto bg-gradient-to-r from-transparent via-yellow-400 to-transparent rounded-full animate-pulse" />
+            <div className={`mt-6 h-1 w-32 mx-auto bg-gradient-to-r from-transparent to-transparent rounded-full animate-pulse ${isToday ? 'via-pink-400' : 'via-yellow-400'}`} />
           </div>
 
           {/* 底部の輝線 */}

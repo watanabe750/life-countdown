@@ -215,7 +215,15 @@ function App() {
       {/* Main Content */}
       <main className="flex-1 flex items-center justify-center px-6 md:px-10 py-6">
         {hasTargets && activeTarget && goalDate && remainingMs <= 0 ? (
-          <GoalAchieved label={activeTarget.label} goalDate={goalDate} />
+          <GoalAchieved
+            label={activeTarget.label}
+            goalDate={goalDate}
+            isToday={
+              goalDate.getFullYear() === now.getFullYear() &&
+              goalDate.getMonth() === now.getMonth() &&
+              goalDate.getDate() === now.getDate()
+            }
+          />
         ) : hasTargets && activeTarget && goalDate ? (
           <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 animate-in fade-in duration-700">
             {/* Left Column */}
