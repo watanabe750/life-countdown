@@ -63,6 +63,10 @@ export function DataModal({ isOpen, onClose, targets, activeTargetId, unitMap, o
           setImportError('ファイルの形式が正しくありません');
           return;
         }
+        if (parsed.targets.length === 0) {
+          setImportError('目標データが含まれていません');
+          return;
+        }
         onImport({ targets: parsed.targets, activeTargetId: parsed.activeTargetId ?? '', unitMap: parsed.unitMap ?? {} });
         setImportSuccess(true);
         setTimeout(() => { setImportSuccess(false); onClose(); }, 1500);
