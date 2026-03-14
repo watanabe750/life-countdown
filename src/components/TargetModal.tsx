@@ -71,7 +71,9 @@ export function TargetModal({ isOpen, onClose, onSave, onDelete, editTarget }: T
       const [ty, tm, td] = targetDate.split('-').map(Number);
       const parsed = new Date(ty, tm - 1, td);
       const today = new Date(); today.setHours(0, 0, 0, 0);
-      if (parsed < today) return '目標日は今日以降の日付を入力してください';
+      // 新規追加時のみ過去日を弾く（編集時は既存の過去日目標も保存可能）
+      const isExistingPastDate = isEdit && editTarget?.type === 'date' && editTarget.targetDate === targetDate;
+      if (!isExistingPastDate && parsed < today) return '目標日は今日以降の日付を入力してください';
     }
 
     return null;
@@ -235,7 +237,7 @@ export function TargetModal({ isOpen, onClose, onSave, onDelete, editTarget }: T
                 type="date"
                 value={targetDate}
                 onChange={(e) => setTargetDate(e.target.value)}
-                min={new Date().toISOString().split('T')[0]}
+                {...(!isEdit && { min: new Date().toISOString().split('T')[0] })}
                 className="w-full bg-white border-2 border-purple-200 rounded-2xl focus:ring-2 focus:ring-purple-400 focus:border-purple-400 outline-none text-gray-800 font-medium transition-all"
                 style={{ padding: '0.75rem 1.25rem' }}
               />
