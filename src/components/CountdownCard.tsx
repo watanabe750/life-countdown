@@ -11,6 +11,7 @@ interface CountdownCardProps {
   remainingMs: number;
   selectedUnit: TimeUnit;
   goalDate: Date;
+  remainingDays: number;
 }
 
 // 数値のカウントアップアニメーション
@@ -59,6 +60,7 @@ export function CountdownCard({
   remainingMs,
   selectedUnit,
   goalDate,
+  remainingDays,
 }: CountdownCardProps) {
   const displayValue = useMemo(() => {
     const value = convertMsToUnit(remainingMs, selectedUnit);
@@ -136,6 +138,38 @@ export function CountdownCard({
 
         {/* コンテンツ */}
         <div className="relative text-center">
+          {/* 期限警告バナー */}
+          {remainingDays > 0 && remainingDays <= 30 && (
+            <div
+              className="mb-5 inline-flex items-center gap-2 rounded-2xl border font-bold text-sm"
+              style={{
+                padding: '0.5rem 1.25rem',
+                ...(remainingDays <= 7
+                  ? {
+                      background: 'linear-gradient(135deg, rgba(239,68,68,0.25), rgba(249,115,22,0.25))',
+                      borderColor: 'rgba(239,68,68,0.5)',
+                      color: '#fca5a5',
+                    }
+                  : {
+                      background: 'linear-gradient(135deg, rgba(234,179,8,0.2), rgba(249,115,22,0.2))',
+                      borderColor: 'rgba(234,179,8,0.4)',
+                      color: '#fde68a',
+                    }),
+              }}
+            >
+              <span
+                className="w-2 h-2 rounded-full shrink-0"
+                style={{
+                  backgroundColor: remainingDays <= 7 ? '#f87171' : '#fbbf24',
+                  animation: 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                }}
+              />
+              {remainingDays <= 7
+                ? `🔥 あと ${remainingDays} 日！`
+                : `⚠️ あと ${remainingDays} 日`}
+            </div>
+          )}
+
           {/* ラベル */}
           <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
