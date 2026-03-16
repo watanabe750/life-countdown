@@ -34,7 +34,7 @@ function useCountUp(target: string, duration: number = 1000) {
       const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
       const current = startNum + (targetNum - startNum) * eased;
 
-      setDisplayValue(formatNumber(current, target.includes('.')));
+      setDisplayValue(formatNumber(current));
 
       if (progress < 1) {
         requestAnimationFrame(animate);
@@ -49,10 +49,7 @@ function useCountUp(target: string, duration: number = 1000) {
   return displayValue;
 }
 
-function formatNumber(num: number, hasDecimal: boolean): string {
-  if (hasDecimal) {
-    return num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  }
+function formatNumber(num: number): string {
   return Math.floor(num).toLocaleString('en-US');
 }
 
@@ -198,7 +195,7 @@ export function CountdownCard({
                 key={animatedValue}
               >
                 {animatedValue.split('').map((ch, i) => (
-                  (ch === ',' || ch === '.') ? (
+                  ch === ',' ? (
                     <span key={i} style={{ fontSize: '0.45em', opacity: 0.7, letterSpacing: 0 }}>{ch}</span>
                   ) : ch
                 ))}

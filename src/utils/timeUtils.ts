@@ -65,10 +65,7 @@ export function convertMsToUnit(ms: number, unit: TimeUnit): number {
  * Seconds are displayed as integers, others with 2 decimal places.
  */
 export function formatValue(value: number, unit: TimeUnit): string {
-  if (unit === 'seconds') {
-    return Math.floor(value).toLocaleString();
-  }
-  return value.toFixed(2);
+  return Math.floor(value).toLocaleString();
 }
 
 /**
