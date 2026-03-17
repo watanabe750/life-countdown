@@ -137,33 +137,35 @@ export function CountdownCard({
         <div className="relative text-center">
           {/* 期限警告バナー */}
           {remainingDays > 0 && remainingDays <= 30 && (
-            <div
-              className="mb-5 inline-flex items-center gap-2 rounded-2xl border font-bold text-sm"
-              style={{
-                padding: '0.5rem 1.25rem',
-                ...(remainingDays <= 7
-                  ? {
-                      background: 'linear-gradient(135deg, rgba(239,68,68,0.25), rgba(249,115,22,0.25))',
-                      borderColor: 'rgba(239,68,68,0.5)',
-                      color: '#fca5a5',
-                    }
-                  : {
-                      background: 'linear-gradient(135deg, rgba(234,179,8,0.2), rgba(249,115,22,0.2))',
-                      borderColor: 'rgba(234,179,8,0.4)',
-                      color: '#fde68a',
-                    }),
-              }}
-            >
+            <div style={{ marginBottom: '1.25rem' }}>
               <span
-                className="w-2 h-2 rounded-full shrink-0"
+                className="inline-flex items-center gap-2 rounded-2xl border font-bold text-sm"
                 style={{
-                  backgroundColor: remainingDays <= 7 ? '#f87171' : '#fbbf24',
-                  animation: 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                  padding: '0.4rem 1rem',
+                  ...(remainingDays <= 7
+                    ? {
+                        background: 'linear-gradient(135deg, rgba(239,68,68,0.25), rgba(249,115,22,0.25))',
+                        borderColor: 'rgba(239,68,68,0.5)',
+                        color: '#fca5a5',
+                      }
+                    : {
+                        background: 'linear-gradient(135deg, rgba(234,179,8,0.2), rgba(249,115,22,0.2))',
+                        borderColor: 'rgba(234,179,8,0.4)',
+                        color: '#fde68a',
+                      }),
                 }}
-              />
-              {remainingDays <= 7
-                ? `🔥 あと ${remainingDays} 日！`
-                : `⚠️ あと ${remainingDays} 日`}
+              >
+                <span
+                  className="w-2 h-2 rounded-full shrink-0"
+                  style={{
+                    backgroundColor: remainingDays <= 7 ? '#f87171' : '#fbbf24',
+                    animation: 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                  }}
+                />
+                {remainingDays <= 7
+                  ? `🔥 あと ${remainingDays} 日！`
+                  : `⚠️ あと ${remainingDays} 日`}
+              </span>
             </div>
           )}
 
