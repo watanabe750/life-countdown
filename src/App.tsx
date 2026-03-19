@@ -228,6 +228,15 @@ function App() {
           <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 animate-in fade-in duration-700">
             {/* Left Column */}
             <div className="lg:col-span-7 flex flex-col gap-6">
+              {/* 時計カード */}
+              <div className="bg-gradient-to-br from-white/20 via-white/10 to-transparent backdrop-blur-2xl rounded-3xl border-2 border-white/30 shadow-2xl text-center" style={{ padding: '1.5rem 2rem' }}>
+                <div className="text-white font-mono font-bold" style={{ fontSize: 'clamp(2rem, 8vw, 4rem)', lineHeight: 1 }}>
+                  {now.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+                </div>
+                <div className="text-white/70 text-sm mt-1">
+                  {now.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'short' })}
+                </div>
+              </div>
               <CountdownCard
                 remainingMs={remainingMs}
                 selectedUnit={selectedUnit}
