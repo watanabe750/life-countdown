@@ -242,6 +242,7 @@ function App() {
                 selectedUnit={selectedUnit}
                 goalDate={goalDate}
                 remainingDays={Math.ceil(remainingMs / (24 * 60 * 60 * 1000))}
+                label={activeTarget.label}
               />
               <UnitSwitcher
                 selectedUnit={selectedUnit}

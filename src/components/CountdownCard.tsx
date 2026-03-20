@@ -11,6 +11,7 @@ interface CountdownCardProps {
   selectedUnit: TimeUnit;
   goalDate: Date;
   remainingDays: number;
+  label: string;
 }
 
 
@@ -20,6 +21,7 @@ export function CountdownCard({
   selectedUnit,
   goalDate,
   remainingDays,
+  label,
 }: CountdownCardProps) {
   const displayValue = useMemo(() => {
     const value = convertMsToUnit(remainingMs, selectedUnit);
@@ -72,6 +74,11 @@ export function CountdownCard({
               </span>
             </div>
           )}
+
+          {/* 目標名 */}
+          <div className="mb-2">
+            <h2 className="text-white text-2xl font-black tracking-tight">{label}</h2>
+          </div>
 
           {/* ラベル */}
           <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
