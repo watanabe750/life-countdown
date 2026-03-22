@@ -1,3 +1,4 @@
+import { useRef, useState } from 'react';
 import type { Target } from '../types';
 
 interface TargetTabsProps {
@@ -7,22 +8,67 @@ interface TargetTabsProps {
   onSelect: (id: string) => void;
   onAdd: () => void;
   onEdit: (target: Target) => void;
+  onReorder: (targets: Target[]) => void;
 }
 
 const MAX_TARGETS = 10;
 
-export function TargetTabs({ targets, activeId, achievedIds, onSelect, onAdd, onEdit }: TargetTabsProps) {
+export function TargetTabs({ targets, activeId, achievedIds, onSelect, onAdd, onEdit, onReorder }: TargetTabsProps) {
+  const dragIndex = useRef<number | null>(null);
+  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
+
+  const handleDragStart = (index: number) => {
+    dragIndex.current = index;
+  };
+
+  const handleDragOver = (e: React.DragEvent, index: number) => {
+    e.preventDefault();
+    setDragOverIndex(index);
+  };
+
+  const handleDrop = (index: number) => {
+    if (dragIndex.current === null || dragIndex.current === index) {
+      setDragOverIndex(null);
+      return;
+    }
+    const reordered = [...targets];
+    const [moved] = reordered.splice(dragIndex.current, 1);
+    reordered.splice(index, 0, moved);
+    onReorder(reordered);
+    dragIndex.current = null;
+    setDragOverIndex(null);
+  };
+
+  const handleDragEnd = () => {
+    dragIndex.current = null;
+    setDragOverIndex(null);
+  };
+
   return (
     <div className="flex items-center gap-2 flex-wrap">
-      {targets.map((target) => {
+      {targets.map((target, index) => {
         const isActive = target.id === activeId;
         const isAchieved = achievedIds.has(target.id);
+        const isDragOver = dragOverIndex === index;
         return (
-          <div key={target.id} className="relative group flex items-center" style={{ marginRight: '4px' }}>
+          <div
+            key={target.id}
+            className="relative group flex items-center"
+            style={{ marginRight: '4px', opacity: dragIndex.current === index ? 0.4 : 1 }}
+            draggable
+            onDragStart={() => handleDragStart(index)}
+            onDragOver={(e) => handleDragOver(e, index)}
+            onDrop={() => handleDrop(index)}
+            onDragEnd={handleDragEnd}
+          >
+            {/* ドロップ位置インジケーター */}
+            {isDragOver && (
+              <div className="absolute -left-1.5 top-0 bottom-0 w-1 bg-white/80 rounded-full" />
+            )}
             <button
               onClick={() => onSelect(target.id)}
               className={`
-                rounded-2xl text-sm font-bold transition-all duration-200 truncate
+                rounded-2xl text-sm font-bold transition-all duration-200 truncate cursor-grab active:cursor-grabbing
                 ${isActive
                   ? 'bg-white text-purple-700 shadow-lg shadow-white/20'
                   : 'bg-white/15 text-white/80 hover:bg-white/25 hover:text-white'

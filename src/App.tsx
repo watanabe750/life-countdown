@@ -206,6 +206,7 @@ function App() {
                 onSelect={setActiveTargetId}
                 onAdd={handleAddTarget}
                 onEdit={handleEditTarget}
+                onReorder={setTargets}
               />
             </div>
           )}
