@@ -185,15 +185,26 @@ function App() {
                 Life Countdown
               </h1>
             </div>
-            <button
-              onClick={() => setIsDataModalOpen(true)}
-              className="w-9 h-9 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-xl border border-white/20 flex items-center justify-center text-white/70 hover:text-white transition-all duration-200"
-              title="データ管理（エクスポート/インポート）"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-              </svg>
-            </button>
+            <div className="flex items-center gap-3">
+              {/* 時計 */}
+              <div className="text-right hidden sm:block">
+                <div className="text-white font-mono font-bold text-lg leading-tight">
+                  {now.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+                </div>
+                <div className="text-white/60 text-xs">
+                  {now.toLocaleDateString('ja-JP', { month: 'long', day: 'numeric', weekday: 'short' })}
+                </div>
+              </div>
+              <button
+                onClick={() => setIsDataModalOpen(true)}
+                className="w-9 h-9 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-xl border border-white/20 flex items-center justify-center text-white/70 hover:text-white transition-all duration-200"
+                title="データ管理（エクスポート/インポート）"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+              </button>
+            </div>
           </div>
 
           {/* タブ */}
@@ -229,15 +240,6 @@ function App() {
           <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 animate-in fade-in duration-700">
             {/* Left Column */}
             <div className="lg:col-span-7 flex flex-col gap-6">
-              {/* 時計カード */}
-              <div className="bg-gradient-to-br from-white/20 via-white/10 to-transparent backdrop-blur-2xl rounded-3xl border-2 border-white/30 shadow-2xl text-center" style={{ padding: '1.5rem 2rem' }}>
-                <div className="text-white font-mono font-bold" style={{ fontSize: 'clamp(2rem, 8vw, 4rem)', lineHeight: 1 }}>
-                  {now.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
-                </div>
-                <div className="text-white/70 text-sm mt-1">
-                  {now.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'short' })}
-                </div>
-              </div>
               <CountdownCard
                 remainingMs={remainingMs}
                 selectedUnit={selectedUnit}
@@ -253,33 +255,12 @@ function App() {
 
             {/* Right Column */}
             <div className="lg:col-span-5 flex flex-col gap-6">
-              {progressTarget && progressBirthDate ? (
+              {progressTarget && progressBirthDate && (
                 <ProgressBar
                   birthDate={progressBirthDate}
                   targetAge={progressTarget.targetAge}
                   currentDate={now}
                 />
-              ) : (
-                /* 日付ベース目標の場合はシンプルな残り日数カード */
-                <div className="w-full animate-in fade-in slide-in-from-bottom-3 duration-700 delay-200">
-                  <div className="relative">
-                    <div className="absolute -inset-6 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-3xl blur-2xl animate-pulse-slow" />
-                    <div className="relative bg-white/10 backdrop-blur-sm rounded-3xl border-2 border-white/30 shadow-2xl" style={{ padding: '2rem 2rem' }}>
-                      <h3 className="text-white/90 text-sm font-bold flex items-center gap-2 mb-3">
-                        <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                        {activeTarget.label}
-                      </h3>
-                      <div className="text-xl font-black tabular-nums bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-2">
-                        {goalDate.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })}
-                      </div>
-                      <div className="text-white/60 text-sm">
-                        残り {Math.ceil(remainingMs / (24 * 60 * 60 * 1000)).toLocaleString()} 日
-                      </div>
-                    </div>
-                  </div>
-                </div>
               )}
 
               {/* Quick Stats Card */}
