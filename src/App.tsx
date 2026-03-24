@@ -265,8 +265,7 @@ function App() {
 
               {/* Quick Stats Card */}
               <div className="relative flex-1 animate-in fade-in slide-in-from-right duration-700 delay-300">
-                <div className="absolute -inset-4 bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-blue-500/10 rounded-3xl blur-2xl animate-pulse-slow" />
-                <div className="relative bg-white/10 backdrop-blur-sm rounded-3xl border-2 border-white/30 shadow-2xl h-full flex flex-col" style={{ padding: '2rem 2rem' }}>
+                <div className="bg-white/10 backdrop-blur-sm rounded-3xl border-2 border-white/30 shadow-2xl h-full flex flex-col" style={{ padding: '2rem 2rem' }}>
                   <h3 className="text-white/90 text-sm font-bold mb-5 flex items-center gap-2">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -384,12 +383,9 @@ function App() {
                     />
                   ))}
                 </div>
-                <div className="absolute -top-32 -left-32 w-64 h-64 bg-gradient-to-br from-purple-400/40 to-transparent rounded-full blur-3xl animate-pulse-slow" />
-                <div className="absolute -bottom-32 -right-32 w-64 h-64 bg-gradient-to-br from-pink-400/40 to-transparent rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '1.5s' }} />
-
                 <div className="relative">
                   <div className="relative w-28 h-28 mx-auto mb-8 animate-in zoom-in-50 duration-700 delay-200">
-                    <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-3xl blur-xl opacity-60 animate-pulse-slow" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-3xl blur-xl opacity-60" />
                     <div className="relative w-full h-full bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-sm rounded-3xl border-2 border-white/30 flex items-center justify-center shadow-2xl">
                       <svg className="w-16 h-16 text-white drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />

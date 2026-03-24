@@ -46,7 +46,7 @@ export function TargetTabs({ targets, activeId, achievedIds, onSelect, onAdd, on
 
   return (
     <div className="flex items-center gap-2 flex-wrap">
-      {targets.map((target, index) => {
+      {targets.length > 1 && targets.map((target, index) => {
         const isActive = target.id === activeId;
         const isAchieved = achievedIds.has(target.id);
         const isDragOver = dragOverIndex === index;
@@ -98,7 +98,7 @@ export function TargetTabs({ targets, activeId, achievedIds, onSelect, onAdd, on
 
       {/* 追加ボタン — 区切り線で分離、上限時はグレーアウト＋ツールチップ */}
       <>
-        <div className="w-px h-5 bg-white/20 mx-1 shrink-0" />
+        {targets.length > 1 && <div className="w-px h-5 bg-white/20 mx-1 shrink-0" />}
         <div className="relative" style={{ isolation: 'isolate' }}>
           <button
             onClick={targets.length < MAX_TARGETS ? onAdd : undefined}

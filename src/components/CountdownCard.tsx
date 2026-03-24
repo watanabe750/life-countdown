@@ -83,8 +83,8 @@ export function CountdownCard({
           {/* ラベル */}
           <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-            <p className="text-white/90 text-sm font-bold tracking-wider uppercase">
-              Time Remaining
+            <p className="text-white/90 text-sm font-bold tracking-wider">
+              残り時間
             </p>
           </div>
 

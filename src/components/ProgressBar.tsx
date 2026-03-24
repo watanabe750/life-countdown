@@ -25,11 +25,7 @@ export function ProgressBar({ birthDate, targetAge, currentDate }: ProgressBarPr
 
   return (
     <div className="w-full animate-in fade-in slide-in-from-bottom-3 duration-700 delay-200">
-      {/* 背景の光のオーラ */}
-      <div className="relative">
-        <div className="absolute -inset-6 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-3xl blur-2xl animate-pulse-slow" />
-
-        <div className="relative bg-white/10 backdrop-blur-sm rounded-3xl border-2 border-white/30 shadow-2xl" style={{ padding: '2rem 2rem' }}>
+      <div className="bg-white/10 backdrop-blur-sm rounded-3xl border-2 border-white/30 shadow-2xl" style={{ padding: '2rem 2rem' }}>
           {/* ヘッダー */}
           <div className="flex justify-between items-baseline mb-5">
             <h3 className="text-white/90 text-sm md:text-base font-bold flex items-center gap-2">
@@ -78,6 +74,5 @@ export function ProgressBar({ birthDate, targetAge, currentDate }: ProgressBarPr
           </div>
         </div>
       </div>
-    </div>
   );
 }
