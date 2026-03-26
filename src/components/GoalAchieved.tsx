@@ -94,7 +94,7 @@ export function GoalAchieved({ label, goalDate, isToday = false }: GoalAchievedP
             <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-white/15 backdrop-blur-sm rounded-full border border-white/30">
               <div className={`w-2 h-2 rounded-full animate-pulse ${isToday ? 'bg-pink-400' : 'bg-yellow-400'}`} />
               <span className="text-white/90 text-sm font-bold tracking-wider uppercase">
-                {isToday ? 'Today is the Day' : 'Goal Achieved'}
+                {isToday ? '今日がその日' : '目標達成'}
               </span>
             </div>
 
