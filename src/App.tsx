@@ -239,13 +239,17 @@ function App() {
         ) : hasTargets && activeTarget && goalDate ? (
           <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 animate-in fade-in duration-700">
             {/* Left Column */}
-            <div className="lg:col-span-7 flex flex-col gap-6">
+            <div className="lg:col-span-7 flex flex-col gap-4">
+              {/* 目標名 */}
+              <div className="flex items-center gap-3 px-1">
+                <div className="w-1 h-8 bg-gradient-to-b from-purple-400 to-pink-400 rounded-full" />
+                <h2 className="text-white text-2xl font-black tracking-tight">{activeTarget.label}</h2>
+              </div>
               <CountdownCard
                 remainingMs={remainingMs}
                 selectedUnit={selectedUnit}
                 goalDate={goalDate}
                 remainingDays={Math.ceil(remainingMs / (24 * 60 * 60 * 1000))}
-                label={activeTarget.label}
               />
               <UnitSwitcher
                 selectedUnit={selectedUnit}
