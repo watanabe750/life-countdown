@@ -237,9 +237,9 @@ function App() {
             }
           />
         ) : hasTargets && activeTarget && goalDate ? (
-          <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 animate-in fade-in duration-700">
+          <div className={`w-full max-w-7xl grid grid-cols-1 gap-6 lg:gap-8 animate-in fade-in duration-700 ${progressTarget && progressBirthDate ? 'lg:grid-cols-12' : ''}`}>
             {/* Left Column */}
-            <div className="lg:col-span-7 flex flex-col gap-4">
+            <div className={`flex flex-col gap-4 ${progressTarget && progressBirthDate ? 'lg:col-span-7' : ''}`}>
               {/* 目標名 */}
               <div className="flex items-center gap-3 px-1">
                 <div className="w-1 h-8 bg-gradient-to-b from-purple-400 to-pink-400 rounded-full" />
@@ -258,105 +258,15 @@ function App() {
             </div>
 
             {/* Right Column */}
-            <div className="lg:col-span-5 flex flex-col gap-6">
-              {progressTarget && progressBirthDate && (
+            {progressTarget && progressBirthDate && (
+              <div className="lg:col-span-5 flex flex-col gap-6">
                 <ProgressBar
                   birthDate={progressBirthDate}
                   targetAge={progressTarget.targetAge}
                   currentDate={now}
                 />
-              )}
-
-              {/* Quick Stats Card */}
-              <div className="relative flex-1 animate-in fade-in slide-in-from-right duration-700 delay-300">
-                <div className="bg-white/10 backdrop-blur-sm rounded-3xl border-2 border-white/30 shadow-2xl h-full flex flex-col" style={{ padding: '2rem 2rem' }}>
-                  <h3 className="text-white/90 text-sm font-bold mb-5 flex items-center gap-2">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                    </svg>
-                    Quick Stats
-                  </h3>
-                  <div className="flex-1 grid grid-cols-2 gap-4 auto-rows-fr tabular-nums">
-                    {activeTarget.type === 'age' && progressBirthDate ? (
-                      <>
-                        <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/15 flex flex-col justify-center" style={{ padding: '1.25rem 1.5rem' }}>
-                          <div className="text-white/60 text-xs font-medium mb-1">誕生日</div>
-                          <div className="text-white text-base font-bold">
-                            {progressBirthDate.toLocaleDateString('ja-JP', { year: 'numeric', month: 'short', day: 'numeric' })}
-                          </div>
-                        </div>
-                        <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/15 flex flex-col justify-center" style={{ padding: '1.25rem 1.5rem' }}>
-                          <div className="text-white/60 text-xs font-medium mb-1">目標年齢</div>
-                          <div className="text-white text-base font-bold">{activeTarget.targetAge} 歳</div>
-                        </div>
-                        <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/15 flex flex-col justify-center" style={{ padding: '1.25rem 1.5rem' }}>
-                          <div className="text-white/60 text-xs font-medium mb-1">目標日</div>
-                          <div className="text-white text-base font-bold">
-                            {goalDate.toLocaleDateString('ja-JP', { year: 'numeric', month: 'short', day: 'numeric' })}
-                          </div>
-                        </div>
-                        <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/15 flex flex-col justify-center" style={{ padding: '1.25rem 1.5rem' }}>
-                          <div className="text-white/60 text-xs font-medium mb-1">現在の年齢</div>
-                          <div className="text-white text-base font-bold">
-                            {(() => {
-                              const ageDiff = now.getFullYear() - progressBirthDate.getFullYear();
-                              const monthDiff = now.getMonth() - progressBirthDate.getMonth();
-                              const dayDiff = now.getDate() - progressBirthDate.getDate();
-                              return monthDiff < 0 || (monthDiff === 0 && dayDiff < 0) ? ageDiff - 1 : ageDiff;
-                            })()} 歳
-                          </div>
-                        </div>
-                        <div className="col-span-2 bg-gradient-to-r from-purple-500/10 to-pink-500/10 backdrop-blur-sm rounded-2xl border border-white/15 flex flex-col justify-center" style={{ padding: '1.25rem 1.5rem' }}>
-                          <div className="text-white/60 text-xs font-medium mb-1">次の誕生日まで</div>
-                          <div className="text-white text-base font-bold">
-                            {(() => {
-                              const m = progressBirthDate.getMonth();
-                              const d = progressBirthDate.getDate();
-                              // 2/29生まれは非閏年では3/1を誕生日として扱う
-                              const bdayThisYear = new Date(now.getFullYear(), m, d);
-                              const isLeapDay = m === 1 && d === 29;
-                              const candidate = isLeapDay && bdayThisYear.getMonth() !== 1
-                                ? new Date(now.getFullYear(), 2, 1) // 非閏年は3/1
-                                : bdayThisYear;
-                              if (candidate <= now) {
-                                const nextYear = now.getFullYear() + 1;
-                                const next = new Date(nextYear, m, d);
-                                const nextFinal = isLeapDay && next.getMonth() !== 1
-                                  ? new Date(nextYear, 2, 1)
-                                  : next;
-                                return Math.ceil((nextFinal.getTime() - now.getTime()) / (24 * 60 * 60 * 1000));
-                              }
-                              return Math.ceil((candidate.getTime() - now.getTime()) / (24 * 60 * 60 * 1000));
-                            })()} 日
-                          </div>
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/15 flex flex-col justify-center" style={{ padding: '1.25rem 1.5rem' }}>
-                          <div className="text-white/60 text-xs font-medium mb-1">目標日</div>
-                          <div className="text-white text-base font-bold">
-                            {goalDate.toLocaleDateString('ja-JP', { year: 'numeric', month: 'short', day: 'numeric' })}
-                          </div>
-                        </div>
-                        <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/15 flex flex-col justify-center" style={{ padding: '1.25rem 1.5rem' }}>
-                          <div className="text-white/60 text-xs font-medium mb-1">残り日数</div>
-                          <div className="text-white text-base font-bold">
-                            {Math.ceil(remainingMs / (24 * 60 * 60 * 1000)).toLocaleString()} 日
-                          </div>
-                        </div>
-                        <div className="col-span-2 bg-gradient-to-r from-purple-500/10 to-pink-500/10 backdrop-blur-sm rounded-2xl border border-white/15 flex flex-col justify-center" style={{ padding: '1.25rem 1.5rem' }}>
-                          <div className="text-white/60 text-xs font-medium mb-1">残り時間</div>
-                          <div className="text-white text-base font-bold">
-                            {Math.ceil(remainingMs / (60 * 60 * 1000)).toLocaleString()} 時間
-                          </div>
-                        </div>
-                      </>
-                    )}
-                  </div>
-                </div>
               </div>
-            </div>
+            )}
           </div>
         ) : (
           <div className="text-center relative">
