@@ -10,7 +10,6 @@ interface CountdownCardProps {
   remainingMs: number;
   selectedUnit: TimeUnit;
   goalDate: Date;
-  remainingDays: number;
 }
 
 
@@ -19,8 +18,8 @@ export function CountdownCard({
   remainingMs,
   selectedUnit,
   goalDate,
-  remainingDays,
 }: CountdownCardProps) {
+  const remainingDays = Math.ceil(remainingMs / (24 * 60 * 60 * 1000));
   const displayValue = useMemo(() => {
     const value = convertMsToUnit(remainingMs, selectedUnit);
     return Math.floor(value).toLocaleString();
