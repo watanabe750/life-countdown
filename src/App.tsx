@@ -236,6 +236,7 @@ function App() {
               goalDate.getMonth() === now.getMonth() &&
               goalDate.getDate() === now.getDate()
             }
+            onAddNew={handleAddTarget}
           />
         ) : hasTargets && activeTarget && goalDate ? (
           <div className={`w-full max-w-7xl grid grid-cols-1 gap-6 lg:gap-8 animate-in fade-in duration-700 ${progressTarget && progressBirthDate ? 'lg:grid-cols-12' : ''}`}>

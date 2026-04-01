@@ -4,6 +4,7 @@ interface GoalAchievedProps {
   label: string;
   goalDate: Date;
   isToday?: boolean;
+  onAddNew: () => void;
 }
 
 const COLORS = [
@@ -22,7 +23,7 @@ interface Piece {
   shape: 'rect' | 'circle';
 }
 
-export function GoalAchieved({ label, goalDate, isToday = false }: GoalAchievedProps) {
+export function GoalAchieved({ label, goalDate, isToday = false, onAddNew }: GoalAchievedProps) {
   const [pieces, setPieces] = useState<Piece[]>([]);
   const [visible, setVisible] = useState(false);
 
@@ -111,6 +112,14 @@ export function GoalAchieved({ label, goalDate, isToday = false }: GoalAchievedP
 
             {/* キラキラライン */}
             <div className={`mt-6 h-1 w-32 mx-auto bg-gradient-to-r from-transparent to-transparent rounded-full animate-pulse ${isToday ? 'via-pink-400' : 'via-yellow-400'}`} />
+
+            {/* 次の目標へ */}
+            <button
+              onClick={onAddNew}
+              className="mt-8 px-8 py-3 bg-white/20 hover:bg-white/30 backdrop-blur-sm border border-white/30 rounded-2xl text-white font-bold text-sm transition-all duration-200 hover:scale-105 active:scale-95"
+            >
+              + 新しい目標を追加
+            </button>
           </div>
 
           {/* 底部の輝線 */}
