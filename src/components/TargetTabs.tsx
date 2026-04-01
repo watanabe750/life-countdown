@@ -96,6 +96,20 @@ export function TargetTabs({ targets, activeId, achievedIds, onSelect, onAdd, on
         );
       })}
 
+      {/* 目標が1つのとき編集ボタンを単独表示 */}
+      {targets.length === 1 && (
+        <button
+          onClick={() => onEdit(targets[0])}
+          className="flex items-center gap-1.5 px-3 py-2 bg-white/10 hover:bg-white/20 rounded-2xl text-white/70 hover:text-white text-xs font-bold transition-all duration-200 border border-white/20"
+          title="編集"
+        >
+          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+          </svg>
+          編集
+        </button>
+      )}
+
       {/* 追加ボタン — 区切り線で分離、上限時はグレーアウト＋ツールチップ */}
       <>
         {targets.length > 1 && <div className="w-px h-5 bg-white/20 mx-1 shrink-0" />}
