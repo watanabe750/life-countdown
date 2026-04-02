@@ -72,16 +72,8 @@ export function CountdownCard({
             </div>
           )}
 
-          {/* ラベル */}
-          <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
-            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-            <p className="text-white/90 text-sm font-bold tracking-wider">
-              残り時間
-            </p>
-          </div>
-
-          {/* 数値表示 - カウントアップアニメーション */}
-          <div className="mb-8">
+          {/* 数値表示 */}
+          <div className="mb-6">
             <div className="flex items-baseline justify-center gap-4">
               <span
                 className="font-black text-white tracking-tighter drop-shadow-[0_0_30px_rgba(255,255,255,0.5)]"
@@ -103,6 +95,14 @@ export function CountdownCard({
                 <div className="w-full h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mt-1 animate-pulse" />
               </div>
             </div>
+          </div>
+
+          {/* ラベル */}
+          <div className="inline-flex items-center gap-2 mb-8 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
+            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+            <p className="text-white/90 text-sm font-bold tracking-wider">
+              残り時間
+            </p>
           </div>
 
           {/* 目標日 */}
