@@ -7,20 +7,16 @@ import { CountdownCard } from './components/CountdownCard';
 import { ProgressBar } from './components/ProgressBar';
 import { GoalAchieved } from './components/GoalAchieved';
 import { DataModal } from './components/DataModal';
-import type { Settings, Target } from './types';
+import type { Target } from './types';
 import type { TimeUnit } from './utils/timeUtils';
 import { parseDate, calculateGoalDate, calculateRemainingMs } from './utils/timeUtils';
 
-const STORAGE_KEY_SETTINGS = 'life-countdown-settings';
 const STORAGE_KEY_UNIT_MAP = 'life-countdown-unit-map';
 const STORAGE_KEY_TARGETS = 'life-countdown-targets';
 const STORAGE_KEY_ACTIVE_TARGET = 'life-countdown-active-target';
 const UNITS: TimeUnit[] = ['years', 'months', 'weeks', 'days', 'hours', 'minutes', 'seconds'];
 
 function App() {
-  // 後方互換: 旧設定データを移行するために保持
-  const [legacySettings] = useLocalStorage<Settings | null>(STORAGE_KEY_SETTINGS, null);
-
   const [targets, setTargets] = useLocalStorage<Target[]>(STORAGE_KEY_TARGETS, []);
   const [activeTargetId, setActiveTargetId] = useLocalStorage<string>(STORAGE_KEY_ACTIVE_TARGET, '');
   const [unitMap, setUnitMap] = useLocalStorage<Record<string, TimeUnit>>(STORAGE_KEY_UNIT_MAP, {});
@@ -29,21 +25,6 @@ function App() {
   const [isDataModalOpen, setIsDataModalOpen] = useState(false);
   const [editingTarget, setEditingTarget] = useState<Target | null>(null);
   const [now, setNow] = useState(new Date());
-
-  // 旧データを新フォーマットに1回だけ移行
-  useEffect(() => {
-    if (legacySettings?.birthDate && targets.length === 0) {
-      const migrated: Target = {
-        id: 'migrated-legacy',
-        type: 'age',
-        label: '人生の目標',
-        birthDate: legacySettings.birthDate,
-        targetAge: legacySettings.targetAge,
-      };
-      setTargets([migrated]);
-      setActiveTargetId(migrated.id);
-    }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // アクティブなターゲットを取得
   const activeTarget = useMemo(
