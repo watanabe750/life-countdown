@@ -20,22 +20,26 @@ export function UnitSwitcher({ selectedUnit, onUnitChange }: UnitSwitcherProps) 
     [onUnitChange]
   );
 
-  // 選択された単位の位置にインジケーターを移動
+  // 選択された単位の位置にインジケーターを移動（リサイズ時も再計算）
   useEffect(() => {
-    const button = buttonRefs.get(selectedUnit);
-    if (button) {
-      const parent = button.parentElement;
-      if (parent) {
+    const update = () => {
+      const button = buttonRefs.get(selectedUnit);
+      if (button) {
         setIndicatorStyle({
           left: button.offsetLeft,
           width: button.offsetWidth,
         });
       }
-    }
+    };
+    update();
+    const observer = new ResizeObserver(update);
+    const button = buttonRefs.get(selectedUnit);
+    if (button?.parentElement) observer.observe(button.parentElement);
+    return () => observer.disconnect();
   }, [selectedUnit, buttonRefs]);
 
   return (
-    <div className="flex flex-wrap justify-center gap-2 md:gap-3 p-3 bg-white/5 backdrop-blur-sm rounded-3xl border-2 border-white/30">
+    <div className="relative flex flex-wrap justify-center gap-2 md:gap-3 p-3 bg-white/5 backdrop-blur-sm rounded-3xl border-2 border-white/30">
         {/* 動くインジケーター背景 */}
         <div
           className="absolute top-3 h-[calc(100%-1.5rem)] bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl shadow-lg shadow-purple-500/50 transition-all duration-500 ease-out"
