@@ -35,7 +35,7 @@ export function ProgressBar({ birthDate, targetAge, currentDate }: ProgressBarPr
               人生の進捗
             </h3>
             <div className="text-2xl md:text-3xl font-black tabular-nums bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-              {percentage.toFixed(2)}%
+              {percentage.toFixed(1)}%
             </div>
           </div>
 
@@ -56,7 +56,7 @@ export function ProgressBar({ birthDate, targetAge, currentDate }: ProgressBarPr
                 className="absolute inset-y-0 flex items-center px-3 text-white text-xs font-bold tabular-nums transition-all duration-1000"
                 style={{ width: `${percentage}%`, justifyContent: 'flex-end' }}
               >
-                {percentage.toFixed(1)}%
+                {Math.floor(percentage)}%
               </div>
             )}
           </div>
