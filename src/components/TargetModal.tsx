@@ -41,6 +41,7 @@ export function TargetModal({ isOpen, onClose, onSave, onDelete, editTarget }: T
     editTarget?.type === 'date' ? editTarget.targetDate : ''
   );
 
+  const [memo, setMemo] = useState(editTarget?.memo ?? '');
   const [error, setError] = useState<string | null>(null);
   const [confirmingDelete, setConfirmingDelete] = useState(false);
 
@@ -91,6 +92,7 @@ export function TargetModal({ isOpen, onClose, onSave, onDelete, editTarget }: T
         label: label.trim(),
         birthDate: birthDateStr,
         targetAge,
+        ...(memo.trim() && { memo: memo.trim() }),
       };
       onSave(target);
     } else {
@@ -99,6 +101,7 @@ export function TargetModal({ isOpen, onClose, onSave, onDelete, editTarget }: T
         type: 'date',
         label: label.trim(),
         targetDate,
+        ...(memo.trim() && { memo: memo.trim() }),
       };
       onSave(target);
     }
@@ -243,6 +246,23 @@ export function TargetModal({ isOpen, onClose, onSave, onDelete, editTarget }: T
               />
             </div>
           )}
+
+          {/* メモ */}
+          <div>
+            <div className="flex justify-between items-baseline mb-2">
+              <label className="text-sm font-semibold text-gray-700">メモ <span className="text-gray-400 font-normal">（任意）</span></label>
+              <span className="text-xs text-gray-400">{memo.length}/100</span>
+            </div>
+            <textarea
+              placeholder="この目標についての一言メモ..."
+              value={memo}
+              onChange={(e) => setMemo(e.target.value)}
+              maxLength={100}
+              rows={2}
+              className="w-full bg-white border-2 border-purple-200 rounded-2xl focus:ring-2 focus:ring-purple-400 focus:border-purple-400 outline-none text-gray-800 font-medium transition-all resize-none"
+              style={{ padding: '0.75rem 1.25rem' }}
+            />
+          </div>
 
           {/* エラー */}
           {error && (

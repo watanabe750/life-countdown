@@ -232,6 +232,7 @@ function App() {
                 remainingMs={remainingMs}
                 selectedUnit={selectedUnit}
                 goalDate={goalDate}
+                memo={activeTarget.memo}
               />
               <UnitSwitcher
                 selectedUnit={selectedUnit}

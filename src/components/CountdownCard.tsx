@@ -10,6 +10,7 @@ interface CountdownCardProps {
   remainingMs: number;
   selectedUnit: TimeUnit;
   goalDate: Date;
+  memo?: string;
 }
 
 
@@ -18,6 +19,7 @@ export function CountdownCard({
   remainingMs,
   selectedUnit,
   goalDate,
+  memo,
 }: CountdownCardProps) {
   const remainingDays = Math.ceil(remainingMs / (24 * 60 * 60 * 1000));
   const displayValue = useMemo(() => {
@@ -114,6 +116,13 @@ export function CountdownCard({
               目標: {goalDateString}
             </span>
           </div>
+
+          {/* メモ */}
+          {memo && (
+            <p className="mt-4 text-white/50 text-sm italic">
+              {memo}
+            </p>
+          )}
         </div>
 
         {/* カード下部の輝線 */}

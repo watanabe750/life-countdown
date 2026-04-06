@@ -17,6 +17,7 @@ export interface AgeTarget {
   label: string;
   birthDate: string; // YYYY-MM-DD
   targetAge: number;
+  memo?: string;
 }
 
 // 日付ベースの目標（任意の日付）
@@ -25,6 +26,7 @@ export interface DateTarget {
   type: 'date';
   label: string;
   targetDate: string; // YYYY-MM-DD
+  memo?: string;
 }
 
 export type Target = AgeTarget | DateTarget;
