@@ -37,6 +37,9 @@ export function TargetModal({ isOpen, onClose, onSave, onDelete, editTarget }: T
   );
 
   // 日付ベース用
+  const [startDate, setStartDate] = useState(
+    editTarget?.type === 'date' ? (editTarget.startDate ?? '') : ''
+  );
   const [targetDate, setTargetDate] = useState(
     editTarget?.type === 'date' ? editTarget.targetDate : ''
   );
@@ -100,6 +103,7 @@ export function TargetModal({ isOpen, onClose, onSave, onDelete, editTarget }: T
         id: editTarget?.id ?? generateId(),
         type: 'date',
         label: label.trim(),
+        ...(startDate && { startDate }),
         targetDate,
         ...(memo.trim() && { memo: memo.trim() }),
       };
@@ -234,16 +238,31 @@ export function TargetModal({ isOpen, onClose, onSave, onDelete, editTarget }: T
 
           {/* 日付ベース入力 */}
           {type === 'date' && (
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">目標日</label>
-              <input
-                type="date"
-                value={targetDate}
-                onChange={(e) => setTargetDate(e.target.value)}
-                {...(!isEdit && { min: new Date().toISOString().split('T')[0] })}
-                className="w-full bg-white border-2 border-purple-200 rounded-2xl focus:ring-2 focus:ring-purple-400 focus:border-purple-400 outline-none text-gray-800 font-medium transition-all"
-                style={{ padding: '0.75rem 1.25rem' }}
-              />
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  開始日 <span className="text-gray-400 font-normal">（任意・進捗バー表示に使用）</span>
+                </label>
+                <input
+                  type="date"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                  max={targetDate || undefined}
+                  className="w-full bg-white border-2 border-purple-200 rounded-2xl focus:ring-2 focus:ring-purple-400 focus:border-purple-400 outline-none text-gray-800 font-medium transition-all"
+                  style={{ padding: '0.75rem 1.25rem' }}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">目標日</label>
+                <input
+                  type="date"
+                  value={targetDate}
+                  onChange={(e) => setTargetDate(e.target.value)}
+                  {...(!isEdit && { min: new Date().toISOString().split('T')[0] })}
+                  className="w-full bg-white border-2 border-purple-200 rounded-2xl focus:ring-2 focus:ring-purple-400 focus:border-purple-400 outline-none text-gray-800 font-medium transition-all"
+                  style={{ padding: '0.75rem 1.25rem' }}
+                />
+              </div>
             </div>
           )}
 

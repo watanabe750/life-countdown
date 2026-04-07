@@ -25,6 +25,7 @@ export interface DateTarget {
   id: string;
   type: 'date';
   label: string;
+  startDate?: string; // YYYY-MM-DD（省略時は目標追加日）
   targetDate: string; // YYYY-MM-DD
   memo?: string;
 }
