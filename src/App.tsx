@@ -10,6 +10,7 @@ import { DataModal } from './components/DataModal';
 import type { Target } from './types';
 import type { TimeUnit } from './utils/timeUtils';
 import { parseDate, calculateGoalDate, calculateRemainingMs } from './utils/timeUtils';
+import { getColorOption } from './utils/colorUtils';
 
 const STORAGE_KEY_UNIT_MAP = 'life-countdown-unit-map';
 const STORAGE_KEY_TARGETS = 'life-countdown-targets';
@@ -224,10 +225,15 @@ function App() {
             {/* Left Column */}
             <div className="lg:col-span-7 flex flex-col gap-4">
               {/* 目標名 */}
-              <div className="flex items-center gap-3 px-1">
-                <div className="w-1 h-8 bg-gradient-to-b from-purple-400 to-pink-400 rounded-full" />
-                <h2 className="text-white text-2xl font-black tracking-tight">{activeTarget.label}</h2>
-              </div>
+              {(() => {
+                const c = getColorOption(activeTarget.color);
+                return (
+                  <div className="flex items-center gap-3 px-1">
+                    <div className="w-1 h-8 rounded-full" style={{ background: `linear-gradient(to bottom, ${c.from}, ${c.to})` }} />
+                    <h2 className="text-white text-2xl font-black tracking-tight">{activeTarget.label}</h2>
+                  </div>
+                );
+              })()}
               <CountdownCard
                 remainingMs={remainingMs}
                 selectedUnit={selectedUnit}

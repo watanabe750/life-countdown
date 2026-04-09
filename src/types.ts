@@ -10,6 +10,8 @@ export interface AppState {
   selectedUnit: TimeUnit;
 }
 
+export type TargetColor = 'purple' | 'pink' | 'blue' | 'green' | 'orange' | 'red' | 'yellow' | 'cyan';
+
 // 年齢ベースの目標（誕生日 + 目標年齢）
 export interface AgeTarget {
   id: string;
@@ -17,6 +19,7 @@ export interface AgeTarget {
   label: string;
   birthDate: string; // YYYY-MM-DD
   targetAge: number;
+  color?: TargetColor;
   memo?: string;
 }
 
@@ -27,6 +30,7 @@ export interface DateTarget {
   label: string;
   startDate?: string; // YYYY-MM-DD（省略時は目標追加日）
   targetDate: string; // YYYY-MM-DD
+  color?: TargetColor;
   memo?: string;
 }
 

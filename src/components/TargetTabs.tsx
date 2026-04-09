@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import type { Target } from '../types';
+import { getColorOption } from '../utils/colorUtils';
 
 interface TargetTabsProps {
   targets: Target[];
@@ -50,6 +51,7 @@ export function TargetTabs({ targets, activeId, achievedIds, onSelect, onAdd, on
         const isActive = target.id === activeId;
         const isAchieved = achievedIds.has(target.id);
         const isDragOver = dragOverIndex === index;
+        const colorOpt = getColorOption(target.color);
         return (
           <div
             key={target.id}
@@ -67,14 +69,14 @@ export function TargetTabs({ targets, activeId, achievedIds, onSelect, onAdd, on
             )}
             <button
               onClick={() => onSelect(target.id)}
-              className={`
-                rounded-2xl text-sm font-bold transition-all duration-200 truncate cursor-grab active:cursor-grabbing
-                ${isActive
-                  ? 'bg-white text-purple-700 shadow-lg shadow-white/20'
-                  : 'bg-white/15 text-white/80 hover:bg-white/25 hover:text-white'
-                }
-              `}
-              style={{ padding: '0.5rem 1.5rem 0.5rem 1rem', maxWidth: '10rem' }}
+              className="rounded-2xl text-sm font-bold transition-all duration-200 truncate cursor-grab active:cursor-grabbing"
+              style={{
+                padding: '0.5rem 1.5rem 0.5rem 1rem',
+                maxWidth: '10rem',
+                ...(isActive
+                  ? { background: `linear-gradient(135deg, ${colorOpt.from}, ${colorOpt.to})`, color: 'white', boxShadow: `0 4px 15px ${colorOpt.from}40` }
+                  : { backgroundColor: 'rgba(255,255,255,0.15)', color: 'rgba(255,255,255,0.8)' }),
+              }}
               title={target.label}
             >
               {isAchieved && (

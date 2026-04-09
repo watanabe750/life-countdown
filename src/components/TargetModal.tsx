@@ -1,5 +1,6 @@
 import { useState, useCallback, useMemo } from 'react';
-import type { Target, AgeTarget, DateTarget } from '../types';
+import type { Target, AgeTarget, DateTarget, TargetColor } from '../types';
+import { COLOR_OPTIONS } from '../utils/colorUtils';
 
 interface TargetModalProps {
   isOpen: boolean;
@@ -44,6 +45,7 @@ export function TargetModal({ isOpen, onClose, onSave, onDelete, editTarget }: T
     editTarget?.type === 'date' ? editTarget.targetDate : ''
   );
 
+  const [color, setColor] = useState<TargetColor>(editTarget?.color ?? 'purple');
   const [memo, setMemo] = useState(editTarget?.memo ?? '');
   const [error, setError] = useState<string | null>(null);
   const [confirmingDelete, setConfirmingDelete] = useState(false);
@@ -95,6 +97,7 @@ export function TargetModal({ isOpen, onClose, onSave, onDelete, editTarget }: T
         label: label.trim(),
         birthDate: birthDateStr,
         targetAge,
+        color,
         ...(memo.trim() && { memo: memo.trim() }),
       };
       onSave(target);
@@ -105,6 +108,7 @@ export function TargetModal({ isOpen, onClose, onSave, onDelete, editTarget }: T
         label: label.trim(),
         ...(startDate && { startDate }),
         targetDate,
+        color,
         ...(memo.trim() && { memo: memo.trim() }),
       };
       onSave(target);
@@ -149,6 +153,26 @@ export function TargetModal({ isOpen, onClose, onSave, onDelete, editTarget }: T
               className="w-full bg-white border-2 border-purple-200 rounded-2xl focus:ring-2 focus:ring-purple-400 focus:border-purple-400 outline-none text-gray-800 font-medium transition-all"
               style={{ padding: '0.75rem 1.25rem' }}
             />
+          </div>
+
+          {/* カラー選択 */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">カラー</label>
+            <div className="flex gap-2 flex-wrap">
+              {COLOR_OPTIONS.map((c) => (
+                <button
+                  key={c.value}
+                  onClick={() => setColor(c.value)}
+                  title={c.label}
+                  className="w-8 h-8 rounded-full transition-all duration-200 border-2"
+                  style={{
+                    background: `linear-gradient(135deg, ${c.from}, ${c.to})`,
+                    borderColor: color === c.value ? '#1f2937' : 'transparent',
+                    transform: color === c.value ? 'scale(1.2)' : 'scale(1)',
+                  }}
+                />
+              ))}
+            </div>
           </div>
 
           {/* 種類選択 */}
