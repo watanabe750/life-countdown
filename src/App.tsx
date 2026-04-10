@@ -221,7 +221,7 @@ function App() {
             onAddNew={handleAddTarget}
           />
         ) : hasTargets && activeTarget && goalDate ? (
-          <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 animate-in fade-in duration-700">
+          <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 animate-in fade-in duration-700 lg:items-stretch">
             {/* Left Column */}
             <div className="lg:col-span-7 flex flex-col gap-4">
               {/* 目標名 */}
@@ -251,11 +251,13 @@ function App() {
               {/* 左カラムの目標名行と高さを揃えるスペーサー */}
               <div className="h-8 hidden lg:block" />
               {progressTarget && progressBirthDate ? (
-                <ProgressBar
-                  birthDate={progressBirthDate}
-                  targetAge={progressTarget.targetAge}
-                  currentDate={now}
-                />
+                <div className="flex-1">
+                  <ProgressBar
+                    birthDate={progressBirthDate}
+                    targetAge={progressTarget.targetAge}
+                    currentDate={now}
+                  />
+                </div>
               ) : activeTarget.type === 'date' && activeTarget.startDate ? (
                 /* 日付ベース目標の進捗バー */
                 (() => {
