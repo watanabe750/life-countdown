@@ -247,7 +247,9 @@ function App() {
             </div>
 
             {/* Right Column */}
-            <div className="lg:col-span-5 flex flex-col gap-6">
+            <div className="lg:col-span-5 flex flex-col gap-4">
+              {/* 左カラムの目標名行と高さを揃えるスペーサー */}
+              <div className="h-8 hidden lg:block" />
               {progressTarget && progressBirthDate ? (
                 <ProgressBar
                   birthDate={progressBirthDate}
