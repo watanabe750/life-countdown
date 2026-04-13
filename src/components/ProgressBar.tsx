@@ -1,30 +1,29 @@
 import { useMemo } from 'react';
 
 interface ProgressBarProps {
-  birthDate: Date;
-  targetAge: number;
+  startDate: Date;
+  endDate: Date;
   currentDate: Date;
 }
 
-export function ProgressBar({ birthDate, targetAge, currentDate }: ProgressBarProps) {
-  const { percentage, elapsed, total, startDate, goalDate } = useMemo(() => {
-    const totalMs = targetAge * 365.25 * 24 * 60 * 60 * 1000;
-    const elapsedMs = currentDate.getTime() - birthDate.getTime();
+export function ProgressBar({ startDate, endDate, currentDate }: ProgressBarProps) {
+  const { percentage, elapsed, total } = useMemo(() => {
+    const totalMs = endDate.getTime() - startDate.getTime();
+    const elapsedMs = currentDate.getTime() - startDate.getTime();
     const pct = Math.min(Math.max((elapsedMs / totalMs) * 100, 0), 100);
     const elapsedDays = Math.floor(elapsedMs / (24 * 60 * 60 * 1000));
     const totalDays = Math.floor(totalMs / (24 * 60 * 60 * 1000));
-    const goalDate = new Date(birthDate.getTime() + totalMs);
-    return { percentage: pct, elapsed: elapsedDays, total: totalDays, startDate: birthDate, goalDate };
-  }, [birthDate, targetAge, currentDate]);
+    return { percentage: pct, elapsed: elapsedDays, total: totalDays };
+  }, [startDate, endDate, currentDate]);
 
   const milestones = useMemo(() => {
     return [25, 50, 75].map((pct) => {
-      const ms = (goalDate.getTime() - startDate.getTime()) * (pct / 100);
+      const ms = (endDate.getTime() - startDate.getTime()) * (pct / 100);
       const date = new Date(startDate.getTime() + ms);
       const isPast = date <= currentDate;
       return { pct, date, isPast };
     });
-  }, [startDate, goalDate, currentDate]);
+  }, [startDate, endDate, currentDate]);
 
   return (
     <div className="w-full h-full animate-in fade-in slide-in-from-bottom-3 duration-700 delay-200">

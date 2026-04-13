@@ -71,9 +71,21 @@ function App() {
     }
   }, [activeTarget, now]);
 
-  // ProgressBar用: 年齢ベースのみ表示可能
-  const progressTarget = activeTarget?.type === 'age' ? activeTarget : null;
-  const progressBirthDate = progressTarget ? parseDate(progressTarget.birthDate) : null;
+  // ProgressBar用: 開始日・終了日を算出
+  const progressDates = useMemo(() => {
+    if (!activeTarget || !goalDate) return null;
+    if (activeTarget.type === 'age') {
+      const start = parseDate(activeTarget.birthDate);
+      if (!start) return null;
+      return { startDate: start, endDate: goalDate };
+    }
+    if (activeTarget.type === 'date' && activeTarget.startDate) {
+      const start = parseDate(activeTarget.startDate);
+      if (!start) return null;
+      return { startDate: start, endDate: goalDate };
+    }
+    return null;
+  }, [activeTarget, goalDate]);
 
   // 達成済みターゲットのIDセット
   const achievedIds = useMemo(() => {
@@ -250,63 +262,14 @@ function App() {
             <div className="lg:col-span-5 flex flex-col gap-4">
               {/* 左カラムの目標名行と高さを揃えるスペーサー */}
               <div className="h-8 hidden lg:block" />
-              {progressTarget && progressBirthDate ? (
+              {progressDates ? (
                 <div className="flex-1">
                   <ProgressBar
-                    birthDate={progressBirthDate}
-                    targetAge={progressTarget.targetAge}
+                    startDate={progressDates.startDate}
+                    endDate={progressDates.endDate}
                     currentDate={now}
                   />
                 </div>
-              ) : activeTarget.type === 'date' && activeTarget.startDate ? (
-                /* 日付ベース目標の進捗バー */
-                (() => {
-                  const start = parseDate(activeTarget.startDate);
-                  if (!start) return null;
-                  const totalMs = goalDate.getTime() - start.getTime();
-                  const elapsedMs = now.getTime() - start.getTime();
-                  const pct = Math.min(Math.max((elapsedMs / totalMs) * 100, 0), 100);
-                  const elapsedDays = Math.floor(elapsedMs / (24 * 60 * 60 * 1000));
-                  const totalDays = Math.floor(totalMs / (24 * 60 * 60 * 1000));
-                  return (
-                    <div className="bg-white/10 backdrop-blur-sm rounded-3xl border-2 border-white/30 shadow-2xl" style={{ padding: '2rem' }}>
-                      <div className="flex justify-between items-baseline mb-5">
-                        <h3 className="text-white/90 text-sm font-bold flex items-center gap-2">
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                          </svg>
-                          進捗
-                        </h3>
-                        <div className="text-2xl font-black tabular-nums bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                          {pct.toFixed(1)}%
-                        </div>
-                      </div>
-                      <div className="relative h-6 bg-white/5 rounded-full overflow-hidden border border-white/15 shadow-inner">
-                        <div
-                          className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 transition-all duration-1000 ease-out"
-                          style={{ width: `${pct}%` }}
-                        >
-                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer" />
-                        </div>
-                        {pct > 10 && (
-                          <div className="absolute inset-y-0 flex items-center px-3 text-white text-xs font-bold" style={{ width: `${pct}%`, justifyContent: 'flex-end' }}>
-                            {Math.floor(pct)}%
-                          </div>
-                        )}
-                      </div>
-                      <div className="mt-5 flex justify-between text-xs tabular-nums">
-                        <div className="flex items-center gap-2">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
-                          <span className="text-white/70 font-medium">{elapsedDays.toLocaleString()} 日経過</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-white/70 font-medium">残り {(totalDays - elapsedDays).toLocaleString()} 日</span>
-                          <div className="w-2 h-2 bg-pink-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }} />
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })()
               ) : null}
             </div>
           </div>
