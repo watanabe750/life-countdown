@@ -407,6 +407,7 @@ function App() {
 
       {/* 目標追加・編集モーダル */}
       <TargetModal
+        key={editingTarget?.id ?? 'new'}
         isOpen={isTargetModalOpen}
         onClose={() => { setIsTargetModalOpen(false); setEditingTarget(null); }}
         onSave={handleSaveTarget}
