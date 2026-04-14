@@ -79,13 +79,13 @@ function App() {
       if (!start) return null;
       return { startDate: start, endDate: goalDate };
     }
-    if (activeTarget.type === 'date' && activeTarget.startDate) {
-      const start = parseDate(activeTarget.startDate);
+    if (activeTarget.type === 'date') {
+      const start = activeTarget.startDate ? parseDate(activeTarget.startDate) : now;
       if (!start) return null;
       return { startDate: start, endDate: goalDate };
     }
     return null;
-  }, [activeTarget, goalDate]);
+  }, [activeTarget, goalDate, now]);
 
   // 達成済みターゲットのIDセット
   const achievedIds = useMemo(() => {
