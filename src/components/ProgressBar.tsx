@@ -39,7 +39,7 @@ export function ProgressBar({ startDate, endDate, currentDate, color }: Progress
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
             </svg>
-            人生の進捗
+            進捗
           </h3>
           <div
             className="text-2xl md:text-3xl font-black tabular-nums bg-clip-text text-transparent"
