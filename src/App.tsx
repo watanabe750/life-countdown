@@ -268,6 +268,7 @@ function App() {
                     startDate={progressDates.startDate}
                     endDate={progressDates.endDate}
                     currentDate={now}
+                    color={activeTarget?.color}
                   />
                 </div>
               ) : null}

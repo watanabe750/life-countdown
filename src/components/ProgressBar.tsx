@@ -1,12 +1,17 @@
 import { useMemo } from 'react';
+import type { TargetColor } from '../types';
+import { getColorOption } from '../utils/colorUtils';
 
 interface ProgressBarProps {
   startDate: Date;
   endDate: Date;
   currentDate: Date;
+  color?: TargetColor;
 }
 
-export function ProgressBar({ startDate, endDate, currentDate }: ProgressBarProps) {
+export function ProgressBar({ startDate, endDate, currentDate, color }: ProgressBarProps) {
+  const colorOpt = getColorOption(color);
+
   const { percentage, elapsed, total } = useMemo(() => {
     const totalMs = endDate.getTime() - startDate.getTime();
     const elapsedMs = currentDate.getTime() - startDate.getTime();
@@ -36,7 +41,10 @@ export function ProgressBar({ startDate, endDate, currentDate }: ProgressBarProp
             </svg>
             人生の進捗
           </h3>
-          <div className="text-2xl md:text-3xl font-black tabular-nums bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+          <div
+            className="text-2xl md:text-3xl font-black tabular-nums bg-clip-text text-transparent"
+            style={{ backgroundImage: `linear-gradient(135deg, ${colorOpt.from}, ${colorOpt.to})` }}
+          >
             {percentage.toFixed(1)}%
           </div>
         </div>
@@ -44,8 +52,8 @@ export function ProgressBar({ startDate, endDate, currentDate }: ProgressBarProp
         {/* プログレスバー */}
         <div className="relative h-6 bg-white/5 rounded-full overflow-hidden border border-white/15 shadow-inner">
           <div
-            className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 transition-all duration-1000 ease-out"
-            style={{ width: `${percentage}%` }}
+            className="absolute inset-0 transition-all duration-1000 ease-out"
+            style={{ width: `${percentage}%`, backgroundImage: `linear-gradient(to right, ${colorOpt.from}, ${colorOpt.to})` }}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer" />
           </div>
@@ -62,12 +70,12 @@ export function ProgressBar({ startDate, endDate, currentDate }: ProgressBarProp
         {/* 経過 / 残り 日数 */}
         <div className="mt-4 flex justify-between text-xs tabular-nums">
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
+            <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: colorOpt.from }} />
             <span className="text-white/70 font-medium">{elapsed.toLocaleString()} 日経過</span>
           </div>
           <div className="flex items-center gap-2">
             <span className="text-white/70 font-medium">残り {(total - elapsed).toLocaleString()} 日</span>
-            <div className="w-2 h-2 bg-pink-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }} />
+            <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: colorOpt.to, animationDelay: '0.5s' }} />
           </div>
         </div>
 
@@ -81,7 +89,7 @@ export function ProgressBar({ startDate, endDate, currentDate }: ProgressBarProp
                   className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-black"
                   style={{
                     background: isPast
-                      ? 'linear-gradient(135deg, #a855f7, #ec4899)'
+                      ? `linear-gradient(135deg, ${colorOpt.from}, ${colorOpt.to})`
                       : 'rgba(255,255,255,0.1)',
                     color: isPast ? 'white' : 'rgba(255,255,255,0.4)',
                   }}
