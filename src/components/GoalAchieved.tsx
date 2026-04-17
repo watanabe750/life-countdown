@@ -1,10 +1,12 @@
 import { useEffect, useState, useMemo } from 'react';
+import type { Target } from '../types';
 
 interface GoalAchievedProps {
   label: string;
   goalDate: Date;
   isToday?: boolean;
   onAddNew: () => void;
+  archivedTargets?: { target: Target; goalDate: Date }[];
 }
 
 const COLORS = [
@@ -23,7 +25,7 @@ interface Piece {
   shape: 'rect' | 'circle';
 }
 
-export function GoalAchieved({ label, goalDate, isToday = false, onAddNew }: GoalAchievedProps) {
+export function GoalAchieved({ label, goalDate, isToday = false, onAddNew, archivedTargets = [] }: GoalAchievedProps) {
   const [pieces, setPieces] = useState<Piece[]>([]);
   const [visible, setVisible] = useState(false);
 
@@ -120,6 +122,26 @@ export function GoalAchieved({ label, goalDate, isToday = false, onAddNew }: Goa
             >
               + 新しい目標を追加
             </button>
+
+            {/* 過去の達成一覧 */}
+            {archivedTargets.length > 0 && (
+              <div className="mt-8 pt-6 border-t border-white/15 text-left">
+                <p className="text-white/50 text-xs font-bold uppercase tracking-wider mb-3">過去の達成</p>
+                <div className="flex flex-col gap-2">
+                  {archivedTargets.map(({ target, goalDate: gd }) => (
+                    <div key={target.id} className="flex items-center justify-between gap-4 px-3 py-2 bg-white/5 rounded-xl">
+                      <div className="flex items-center gap-2 min-w-0">
+                        <span className="text-green-400 text-xs">✓</span>
+                        <span className="text-white/70 text-sm font-medium truncate">{target.label}</span>
+                      </div>
+                      <span className="text-white/40 text-xs tabular-nums shrink-0">
+                        {gd.toLocaleDateString('ja-JP', { year: 'numeric', month: 'short', day: 'numeric' })}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* 底部の輝線 */}

@@ -87,9 +87,10 @@ function App() {
     return null;
   }, [activeTarget, goalDate, now]);
 
-  // 達成済みターゲットのIDセット
-  const achievedIds = useMemo(() => {
+  // 達成済みターゲットのIDセットと一覧
+  const { achievedIds, achievedTargets } = useMemo(() => {
     const set = new Set<string>();
+    const list: { target: Target; goalDate: Date }[] = [];
     for (const t of targets) {
       let goal: Date | null = null;
       if (t.type === 'age') {
@@ -98,9 +99,12 @@ function App() {
       } else {
         goal = parseDate(t.targetDate);
       }
-      if (goal && calculateRemainingMs(goal, now) <= 0) set.add(t.id);
+      if (goal && calculateRemainingMs(goal, now) <= 0) {
+        set.add(t.id);
+        list.push({ target: t, goalDate: goal });
+      }
     }
-    return set;
+    return { achievedIds: set, achievedTargets: list };
   }, [targets, now]);
 
   // キーボードショートカット
@@ -231,6 +235,7 @@ function App() {
               goalDate.getDate() === now.getDate()
             }
             onAddNew={handleAddTarget}
+            archivedTargets={achievedTargets.filter(({ target }) => target.id !== activeTarget.id)}
           />
         ) : hasTargets && activeTarget && goalDate ? (
           <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 animate-in fade-in duration-700 lg:items-stretch">
