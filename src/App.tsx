@@ -156,6 +156,12 @@ function App() {
     });
   }, [editingTarget, setTargets, setActiveTargetId]);
 
+  const handleDuplicateTarget = useCallback((target: Target) => {
+    const newTarget = { ...target, id: crypto.randomUUID(), label: `${target.label} のコピー` };
+    setTargets((prev) => [...prev, newTarget]);
+    setActiveTargetId(newTarget.id);
+  }, [setTargets, setActiveTargetId]);
+
   const handleImport = useCallback(({ targets: newTargets, activeTargetId: newActiveId, unitMap: newUnitMap }: { targets: Target[]; activeTargetId: string; unitMap: Record<string, TimeUnit> }) => {
     setTargets(newTargets);
     setActiveTargetId(newActiveId);
@@ -216,6 +222,7 @@ function App() {
                 onSelect={setActiveTargetId}
                 onAdd={handleAddTarget}
                 onEdit={handleEditTarget}
+                onDuplicate={handleDuplicateTarget}
                 onReorder={setTargets}
               />
             </div>
