@@ -9,13 +9,12 @@ interface TargetTabsProps {
   onSelect: (id: string) => void;
   onAdd: () => void;
   onEdit: (target: Target) => void;
-  onDuplicate: (target: Target) => void;
   onReorder: (targets: Target[]) => void;
 }
 
 const MAX_TARGETS = 10;
 
-export function TargetTabs({ targets, activeId, achievedIds, onSelect, onAdd, onEdit, onDuplicate, onReorder }: TargetTabsProps) {
+export function TargetTabs({ targets, activeId, achievedIds, onSelect, onAdd, onEdit, onReorder }: TargetTabsProps) {
   const dragIndex = useRef<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
 
@@ -95,46 +94,22 @@ export function TargetTabs({ targets, activeId, achievedIds, onSelect, onAdd, on
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
               </svg>
             </button>
-            {/* 複製ボタン */}
-            {targets.length < MAX_TARGETS && (
-              <button
-                onClick={(e) => { e.stopPropagation(); onDuplicate(target); }}
-                className="absolute bottom-0 right-0 w-5 h-5 bg-white/80 rounded-full text-gray-500 hover:text-blue-600 hover:bg-white transition-all duration-200 flex items-center justify-center shadow-sm translate-x-1/3 translate-y-1/3"
-                title="複製"
-              >
-                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                </svg>
-              </button>
-            )}
           </div>
         );
       })}
 
-      {/* 目標が1つのとき編集・複製ボタンを単独表示 */}
+      {/* 目標が1つのとき編集ボタンを単独表示 */}
       {targets.length === 1 && (
-        <>
-          <button
-            onClick={() => onEdit(targets[0])}
-            className="flex items-center gap-1.5 px-3 py-2 bg-white/10 hover:bg-white/20 rounded-2xl text-white/70 hover:text-white text-xs font-bold transition-all duration-200 border border-white/20"
-            title="編集"
-          >
-            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-            </svg>
-            編集
-          </button>
-          <button
-            onClick={() => onDuplicate(targets[0])}
-            className="flex items-center gap-1.5 px-3 py-2 bg-white/10 hover:bg-white/20 rounded-2xl text-white/70 hover:text-white text-xs font-bold transition-all duration-200 border border-white/20"
-            title="複製"
-          >
-            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-            </svg>
-            複製
-          </button>
-        </>
+        <button
+          onClick={() => onEdit(targets[0])}
+          className="flex items-center gap-1.5 px-3 py-2 bg-white/10 hover:bg-white/20 rounded-2xl text-white/70 hover:text-white text-xs font-bold transition-all duration-200 border border-white/20"
+          title="編集"
+        >
+          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+          </svg>
+          編集
+        </button>
       )}
 
       {/* 追加ボタン — 区切り線で分離、上限時はグレーアウト＋ツールチップ */}

@@ -7,6 +7,7 @@ interface TargetModalProps {
   onClose: () => void;
   onSave: (target: Target) => void;
   onDelete?: () => void;
+  onDuplicate?: () => void;
   editTarget?: Target | null; // 編集時は既存データを渡す
 }
 
@@ -14,7 +15,7 @@ function generateId() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
 }
 
-export function TargetModal({ isOpen, onClose, onSave, onDelete, editTarget }: TargetModalProps) {
+export function TargetModal({ isOpen, onClose, onSave, onDelete, onDuplicate, editTarget }: TargetModalProps) {
   const isEdit = !!editTarget;
 
   const [type, setType] = useState<'age' | 'date'>(editTarget?.type ?? 'age');
@@ -330,6 +331,17 @@ export function TargetModal({ isOpen, onClose, onSave, onDelete, editTarget }: T
                 {isEdit ? '更新' : '追加'}
               </button>
             </div>
+            {isEdit && onDuplicate && (
+              <button
+                onClick={() => { onDuplicate(); onClose(); }}
+                className="w-full px-4 py-3 text-blue-600 bg-blue-50 rounded-xl hover:bg-blue-100 active:scale-95 transition-all font-semibold text-sm flex items-center justify-center gap-2"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+                この目標を複製
+              </button>
+            )}
             {isEdit && onDelete && (
               confirmingDelete ? (
                 <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex flex-col gap-3">

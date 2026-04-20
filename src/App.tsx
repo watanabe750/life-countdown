@@ -222,7 +222,6 @@ function App() {
                 onSelect={setActiveTargetId}
                 onAdd={handleAddTarget}
                 onEdit={handleEditTarget}
-                onDuplicate={handleDuplicateTarget}
                 onReorder={setTargets}
               />
             </div>
@@ -388,6 +387,7 @@ function App() {
         onClose={() => { setIsTargetModalOpen(false); setEditingTarget(null); }}
         onSave={handleSaveTarget}
         onDelete={editingTarget ? handleDeleteTarget : undefined}
+        onDuplicate={editingTarget ? () => handleDuplicateTarget(editingTarget) : undefined}
         editTarget={editingTarget}
       />
     </div>
