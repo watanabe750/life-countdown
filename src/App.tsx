@@ -116,17 +116,27 @@ function App() {
       }
       if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
         e.preventDefault();
-        setSelectedUnit((current: TimeUnit) => {
-          const idx = UNITS.indexOf(current);
-          return e.key === 'ArrowLeft'
-            ? UNITS[idx > 0 ? idx - 1 : UNITS.length - 1]
-            : UNITS[idx < UNITS.length - 1 ? idx + 1 : 0];
-        });
+        if (e.shiftKey) {
+          setActiveTargetId((currentId: string) => {
+            const idx = targets.findIndex((t) => t.id === currentId);
+            const next = e.key === 'ArrowLeft'
+              ? targets[idx > 0 ? idx - 1 : targets.length - 1]
+              : targets[idx < targets.length - 1 ? idx + 1 : 0];
+            return next?.id ?? currentId;
+          });
+        } else {
+          setSelectedUnit((current: TimeUnit) => {
+            const idx = UNITS.indexOf(current);
+            return e.key === 'ArrowLeft'
+              ? UNITS[idx > 0 ? idx - 1 : UNITS.length - 1]
+              : UNITS[idx < UNITS.length - 1 ? idx + 1 : 0];
+          });
+        }
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isTargetModalOpen, setSelectedUnit]);
+  }, [isTargetModalOpen, setSelectedUnit, setActiveTargetId, targets]);
 
   // ターゲット操作
   const handleAddTarget = useCallback(() => {
