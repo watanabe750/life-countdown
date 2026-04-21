@@ -119,7 +119,16 @@ export function CountdownCard({
 
           {/* メモ */}
           {memo && (
-            <p className="mt-4 text-white/50 text-sm italic">
+            <p
+              className="mt-4 text-white/50 text-sm italic leading-relaxed"
+              style={{
+                display: '-webkit-box',
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: 'vertical',
+                overflow: 'hidden',
+              }}
+              title={memo}
+            >
               {memo}
             </p>
           )}
