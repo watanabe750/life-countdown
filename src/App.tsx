@@ -24,6 +24,7 @@ function App() {
 
   const [isTargetModalOpen, setIsTargetModalOpen] = useState(false);
   const [isDataModalOpen, setIsDataModalOpen] = useState(false);
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [editingTarget, setEditingTarget] = useState<Target | null>(null);
   const [now, setNow] = useState(new Date());
 
@@ -110,10 +111,13 @@ function App() {
   // キーボードショートカット
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (isTargetModalOpen) {
-        if (e.key === 'Escape') setIsTargetModalOpen(false);
+      if (e.key === 'Escape') {
+        if (isTargetModalOpen) setIsTargetModalOpen(false);
+        if (isHelpOpen) setIsHelpOpen(false);
         return;
       }
+      if (isTargetModalOpen || isHelpOpen) return;
+      if (e.key === '?') { setIsHelpOpen(true); return; }
       if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
         e.preventDefault();
         if (e.shiftKey) {
@@ -136,7 +140,7 @@ function App() {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isTargetModalOpen, setSelectedUnit, setActiveTargetId, targets]);
+  }, [isTargetModalOpen, isHelpOpen, setIsHelpOpen, setSelectedUnit, setActiveTargetId, targets]);
 
   // ターゲット操作
   const handleAddTarget = useCallback(() => {
@@ -389,6 +393,43 @@ function App() {
         unitMap={unitMap}
         onImport={handleImport}
       />
+
+      {/* ショートカットヘルプ */}
+      {isHelpOpen && (
+        <div
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in duration-200"
+          onClick={() => setIsHelpOpen(false)}
+        >
+          <div
+            className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl max-w-sm w-full border border-white/20 animate-in zoom-in-95 duration-300"
+            style={{ padding: '2rem 2.5rem' }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 className="text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-6">
+              キーボードショートカット
+            </h2>
+            <div className="flex flex-col gap-3">
+              {[
+                { key: '← / →', desc: '表示単位を切り替え' },
+                { key: 'Shift + ← / →', desc: '目標タブを切り替え' },
+                { key: '?', desc: 'このヘルプを表示' },
+                { key: 'Esc', desc: 'モーダルを閉じる' },
+              ].map(({ key, desc }) => (
+                <div key={key} className="flex items-center justify-between gap-4">
+                  <kbd className="px-3 py-1.5 bg-gray-100 border border-gray-200 rounded-lg text-gray-700 text-xs font-mono font-bold whitespace-nowrap">{key}</kbd>
+                  <span className="text-gray-600 text-sm">{desc}</span>
+                </div>
+              ))}
+            </div>
+            <button
+              onClick={() => setIsHelpOpen(false)}
+              className="mt-6 w-full py-2.5 text-gray-500 bg-gray-100 rounded-xl hover:bg-gray-200 transition-all text-sm font-semibold"
+            >
+              閉じる
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* 目標追加・編集モーダル */}
       <TargetModal
