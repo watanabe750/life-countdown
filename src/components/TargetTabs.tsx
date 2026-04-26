@@ -46,7 +46,8 @@ export function TargetTabs({ targets, activeId, achievedIds, onSelect, onAdd, on
   };
 
   return (
-    <div className="flex items-center gap-2 flex-wrap">
+    <div className="overflow-x-auto scrollbar-none" style={{ WebkitOverflowScrolling: 'touch' }}>
+    <div className="flex items-center gap-2 flex-nowrap" style={{ minWidth: 'max-content' }}>
       {targets.length > 1 && targets.map((target, index) => {
         const isActive = target.id === activeId;
         const isAchieved = achievedIds.has(target.id);
@@ -145,6 +146,7 @@ export function TargetTabs({ targets, activeId, achievedIds, onSelect, onAdd, on
           )}
         </div>
       </>
+    </div>
     </div>
   );
 }
