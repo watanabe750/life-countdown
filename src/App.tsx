@@ -214,6 +214,13 @@ function App() {
                 </div>
               </div>
               <button
+                onClick={() => setIsHelpOpen(true)}
+                className="w-9 h-9 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-xl border border-white/20 flex items-center justify-center text-white/70 hover:text-white transition-all duration-200 font-bold text-sm"
+                title="キーボードショートカット (?)"
+              >
+                ?
+              </button>
+              <button
                 onClick={() => setIsDataModalOpen(true)}
                 className="w-9 h-9 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-xl border border-white/20 flex items-center justify-center text-white/70 hover:text-white transition-all duration-200"
                 title="データ管理（エクスポート/インポート）"
